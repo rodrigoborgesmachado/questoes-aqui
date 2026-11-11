@@ -1,23 +1,23 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AdminLayout from '../../layouts/admin/AdminLayout';
-import DashboardPage from '../../pages/admin/DashBoard/DashboardPage';
-import ProvaListPage from '../../pages/admin/Prova/ProvaListPage/ProvaListPage';
-import ProvaForm from '../../pages/admin/Prova/ProvaForm/ProvaForm';
-import QuestoesListPage from '../../pages/admin/Questoes/QuestoesListPage/QuestoesListPage';
-import QuestoesForm from '../../pages/admin/Questoes/QuestoesForm/QuestoesForm';
-import AvaliacaoListPage from '../../pages/admin/Avaliacao/AvaliacaoListPage/AvaliacaoListPage';
-import AvaliacaoPage from '../../pages/admin/Avaliacao/AvaliacaoPage/AvaliacaoPage';
-import RespostasavaliacoesListPage from '../../pages/admin/Respostasavaliacoes/RespostasavaliacoesListPage/RespostasavaliacoesListPage';
-import RespostasavaliacoesPage from '../../pages/admin/Respostasavaliacoes/RespostasavaliacoesPage/RespostasavaliacoesPage';
-import NotascortesisuListPage from '../../pages/admin/Notascortesisu/NotascortesisuListPage/NotascortesisuListPage';
-import NotascortesisuPage from '../../pages/admin/Notascortesisu/NotascortesisuPage/NotascortesisuPage';
-import NotascortesisuForm from '../../pages/admin/Notascortesisu/NotascortesisuForm/NotascortesisuForm';
-import UsuariosListPage from '../../pages/admin/Usuarios/UsuariosListPage/UsuariosListPage';
-import LogsListPage from '../../pages/admin/Logs/LogsListPage/LogsListPage';
-import HistoricoUsuariosPage from '../../pages/admin/HistoricoUsuarios/HistoricoUsuariosPage';
-import HistoricoRespostasListPage from '../../pages/admin/HistoricoRespostas/HistoricoRespostasListPage';
-import HistoricoTabuadaDivertidaListPage from '../../pages/admin/HistoricoTabuadaDivertida/HistoricoTabuadaDivertidaListPage';
+import DashboardPage from '../../pages/Admin/DashBoard/DashboardPage';
+import ProvaListPage from '../../pages/Admin/Prova/ProvaListPage/ProvaListPage';
+import ProvaForm from '../../pages/Admin/Prova/ProvaForm/ProvaForm';
+import QuestoesListPage from '../../pages/Admin/Questoes/QuestoesListPage/QuestoesListPage';
+import QuestoesForm from '../../pages/Admin/Questoes/QuestoesForm/QuestoesForm';
+import AvaliacaoListPage from '../../pages/Admin/Avaliacao/AvaliacaoListPage/AvaliacaoListPage';
+import AvaliacaoPage from '../../pages/Admin/Avaliacao/AvaliacaoPage/AvaliacaoPage';
+import RespostasavaliacoesListPage from '../../pages/Admin/Respostasavaliacoes/RespostasavaliacoesListPage/RespostasavaliacoesListPage';
+import RespostasavaliacoesPage from '../../pages/Admin/Respostasavaliacoes/RespostasavaliacoesPage/RespostasavaliacoesPage';
+import NotascortesisuListPage from '../../pages/Admin/Notascortesisu/NotascortesisuListPage/NotascortesisuListPage';
+import NotascortesisuPage from '../../pages/Admin/Notascortesisu/NotascortesisuPage/NotascortesisuPage';
+import NotascortesisuForm from '../../pages/Admin/Notascortesisu/NotascortesisuForm/NotascortesisuForm';
+import UsuariosListPage from '../../pages/Admin/Usuarios/UsuariosListPage/UsuariosListPage';
+import LogsListPage from '../../pages/Admin/Logs/LogsListPage/LogsListPage';
+import HistoricoUsuariosPage from '../../pages/Admin/HistoricoUsuarios/HistoricoUsuariosPage';
+import HistoricoRespostasListPage from '../../pages/Admin/HistoricoRespostas/HistoricoRespostasListPage';
+import HistoricoTabuadaDivertidaListPage from '../../pages/Admin/HIstoricoTabuadaDivertida/HistoricoTabuadaDivertidaListPage';
 
 const AdminRoutes = () => (
   <AdminLayout>
