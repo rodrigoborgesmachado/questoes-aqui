@@ -1,0 +1,75 @@
+.admin-layout {
+    min-height: 100vh;
+}
+
+.admin-sidebar-shell {
+    width: var(--app-sidebar-width);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+.admin-header {
+    min-height: var(--app-header-height);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.admin-header > div {
+    min-height: var(--app-header-height);
+}
+
+.admin-sidebar {
+    width: var(--app-sidebar-width);
+    height: 100%;
+    background-color: var(--app-sidebar-bg);
+}
+
+.admin-sidebar .nav {
+    flex-wrap: nowrap;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.admin-sidebar .nav-link {
+    color: var(--app-sidebar-color);
+}
+
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+    color: var(--app-white);
+    background-color: var(--app-sidebar-active-bg);
+}
+
+.admin-main {
+    min-width: 0;
+}
+
+.admin-children {
+    max-width: var(--app-content-max-width);
+    width: 100%;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--app-overlay);
+    z-index: 1030;
+}
+
+@media (max-width: 991.98px) {
+    .admin-sidebar-shell {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 1040;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .admin-sidebar-shell.visible {
+        transform: translateX(0);
+    }
+}

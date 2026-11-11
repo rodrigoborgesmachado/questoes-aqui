@@ -1,0 +1,120 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.home-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.home-hero-title {
+    max-width: 24ch;
+    overflow-wrap: anywhere;
+}
+
+.home-page [id] {
+    scroll-margin-top: calc(var(--app-header-height) + 1rem);
+}
+
+.home-hero-note {
+    border: 1px solid color-mix(in srgb, var(--app-white) 20%, var(--app-transparent));
+    border-radius: var(--app-border-radius);
+    background-color: color-mix(in srgb, var(--app-white) 6%, var(--app-transparent));
+}
+
+.home-page .card {
+    border-radius: 0.75rem;
+}
+
+.home-action-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-action-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: var(--app-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.home-focus {
+    padding: 1rem;
+    background-color: var(--app-primary-subtle);
+    border-radius: var(--app-border-radius);
+}
+
+.home-subject-row + .home-subject-row {
+    border-top: 1px solid var(--bs-border-color);
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.home-subject-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.home-subject-progress {
+    max-width: 24rem;
+    background-color: var(--app-tertiary-bg);
+}
+
+.home-activity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.home-activity-list > li + li {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.home-activity-content {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.home-step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--app-primary);
+    background-color: var(--app-primary-subtle);
+}
+
+.home-resource-state {
+    padding: 2rem 0;
+    color: var(--bs-secondary-color);
+}
+
+.home-page .client-action-card:focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .client-action-card {
+        transition: none;
+    }
+
+    .home-page .client-action-card:hover {
+        transform: none;
+    }
+}

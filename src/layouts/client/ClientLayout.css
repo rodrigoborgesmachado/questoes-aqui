@@ -1,0 +1,83 @@
+.client-layout {
+    min-height: 100vh;
+}
+
+.client-footer-description {
+    max-width: 38ch;
+    line-height: 1.7;
+}
+
+.client-header {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    min-height: var(--app-header-height);
+}
+
+.client-header .navbar-brand {
+    margin-right: 0.5rem;
+    color: var(--app-primary);
+}
+
+.client-header .navbar-toggler {
+    padding: 0.25rem 0.5rem;
+}
+
+.client-header .nav-link.active {
+    color: var(--app-primary);
+    font-weight: 600;
+}
+
+.client-user-menu {
+    right: 0;
+    left: auto;
+    min-width: 220px;
+}
+
+.client-hero {
+    border-radius: 1rem;
+    color: var(--app-white);
+    background: linear-gradient(135deg, var(--app-hero-start), var(--app-hero-end));
+}
+
+.client-hero h1 {
+    color: inherit;
+}
+
+.client-hero .text-hero-muted {
+    opacity: 0.85;
+}
+
+.client-action-card {
+    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.client-action-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem var(--app-shadow-color) !important;
+}
+
+.client-icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--app-primary);
+    background-color: var(--app-primary-subtle);
+}
+
+.question-badge {
+    color: var(--app-primary);
+    background-color: var(--app-primary-subtle);
+}
+
+.client-progress {
+    height: 0.5rem;
+}
+
+.client-progress .progress-bar {
+    background-color: var(--app-primary);
+}

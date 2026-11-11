@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@100..900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+    /* Indigo accents with light slate and dark charcoal surfaces. */
+
+    /* Light theme */
+    --app-light-primary: #4f46e5;
+    --app-light-primary-rgb: 79, 70, 229;
+    --app-light-primary-hover: #4338ca;
+    --app-light-primary-hover-rgb: 67, 56, 202;
+    --app-light-sidebar-bg: #1e2542;
+    --app-light-body-bg: #f5f6fb;
+    --app-light-body-bg-rgb: 245, 246, 251;
+    --app-light-body-color: #25304a;
+    --app-light-body-color-rgb: 37, 48, 74;
+    --app-light-surface-bg: #ffffff;
+    --app-light-secondary-color: #626e85;
+    --app-light-tertiary-bg: #eaeef6;
+    --app-light-tertiary-bg-rgb: 234, 238, 246;
+    --app-light-border-color: #cdd5e3;
+    --app-light-secondary: #626e85;
+    --app-light-secondary-rgb: 98, 110, 133;
+    --app-light-success: #187654;
+    --app-light-success-rgb: 24, 118, 84;
+    --app-light-danger: #c43c50;
+    --app-light-danger-rgb: 196, 60, 80;
+    --app-light-warning: #f0b34b;
+    --app-light-warning-rgb: 240, 179, 75;
+    --app-light-info: #267c9c;
+    --app-light-info-rgb: 38, 124, 156;
+    --app-light-on-primary: #ffffff;
+
+    /* Dark theme: neutral charcoal surfaces inspired by code editors. */
+    --app-dark-primary: #a5b4fc;
+    --app-dark-primary-rgb: 165, 180, 252;
+    --app-dark-primary-hover: #c7d2fe;
+    --app-dark-primary-hover-rgb: 199, 210, 254;
+    --app-dark-sidebar-bg: #181818;
+    --app-dark-body-bg: #1e1e1e;
+    --app-dark-body-bg-rgb: 30, 30, 30;
+    --app-dark-body-color: #d4d4d4;
+    --app-dark-body-color-rgb: 212, 212, 212;
+    --app-dark-surface-bg: #252526;
+    --app-dark-secondary-color: #a6a6a6;
+    --app-dark-tertiary-bg: #181818;
+    --app-dark-tertiary-bg-rgb: 24, 24, 24;
+    --app-dark-border-color: #3c3c3c;
+    --app-dark-secondary: #a6a6a6;
+    --app-dark-secondary-rgb: 166, 166, 166;
+    --app-dark-success: #62d6a3;
+    --app-dark-success-rgb: 98, 214, 163;
+    --app-dark-danger: #fb8e9f;
+    --app-dark-danger-rgb: 251, 142, 159;
+    --app-dark-warning: #f6c36a;
+    --app-dark-warning-rgb: 246, 195, 106;
+    --app-dark-info: #70cae6;
+    --app-dark-info-rgb: 112, 202, 230;
+    --app-dark-on-primary: #181818;
+    --app-dark-hero-end: #2d2d30;
+    --app-dark-overlay: rgba(0, 0, 0, 0.6);
+    --app-dark-shadow-color: rgba(0, 0, 0, 0.25);
+    --app-dark-shadow-strong-color: rgba(0, 0, 0, 0.4);
+
+    --app-white: #ffffff;
+    --app-transparent: transparent;
+    --app-sidebar-color: #c7d2ea;
+    --app-sidebar-active-bg: var(--app-light-primary);
+    --app-hero-start: #312e81;
+    --app-hero-end: var(--app-light-primary);
+    --app-overlay: rgba(8, 15, 35, 0.5);
+    --app-shadow-color: rgba(15, 23, 42, 0.12);
+    --app-shadow-strong-color: rgba(15, 23, 42, 0.2);
+
+    /* Layout */
+    --app-sidebar-width: 260px;
+    --app-header-height: 64px;
+    --app-content-max-width: 1600px;
+    --app-border-radius: 0.5rem;
+}
+
+:root,
+[data-bs-theme="light"] {
+    color-scheme: light;
+    --app-primary: var(--app-light-primary);
+    --app-primary-rgb: var(--app-light-primary-rgb);
+    --app-primary-hover: var(--app-light-primary-hover);
+    --app-primary-hover-rgb: var(--app-light-primary-hover-rgb);
+    --app-sidebar-bg: var(--app-light-sidebar-bg);
+    --app-body-bg: var(--app-light-body-bg);
+    --app-body-bg-rgb: var(--app-light-body-bg-rgb);
+    --app-body-color: var(--app-light-body-color);
+    --app-body-color-rgb: var(--app-light-body-color-rgb);
+    --app-surface-bg: var(--app-light-surface-bg);
+    --app-secondary-color: var(--app-light-secondary-color);
+    --app-tertiary-bg: var(--app-light-tertiary-bg);
+    --app-tertiary-bg-rgb: var(--app-light-tertiary-bg-rgb);
+    --app-border-color: var(--app-light-border-color);
+    --app-secondary: var(--app-light-secondary);
+    --app-secondary-rgb: var(--app-light-secondary-rgb);
+    --app-success: var(--app-light-success);
+    --app-success-rgb: var(--app-light-success-rgb);
+    --app-danger: var(--app-light-danger);
+    --app-danger-rgb: var(--app-light-danger-rgb);
+    --app-warning: var(--app-light-warning);
+    --app-warning-rgb: var(--app-light-warning-rgb);
+    --app-info: var(--app-light-info);
+    --app-info-rgb: var(--app-light-info-rgb);
+    --app-on-primary: var(--app-light-on-primary);
+}
+
+[data-bs-theme="dark"] {
+    color-scheme: dark;
+    --app-primary: var(--app-dark-primary);
+    --app-primary-rgb: var(--app-dark-primary-rgb);
+    --app-primary-hover: var(--app-dark-primary-hover);
+    --app-primary-hover-rgb: var(--app-dark-primary-hover-rgb);
+    --app-sidebar-bg: var(--app-dark-sidebar-bg);
+    --app-body-bg: var(--app-dark-body-bg);
+    --app-body-bg-rgb: var(--app-dark-body-bg-rgb);
+    --app-body-color: var(--app-dark-body-color);
+    --app-body-color-rgb: var(--app-dark-body-color-rgb);
+    --app-surface-bg: var(--app-dark-surface-bg);
+    --app-secondary-color: var(--app-dark-secondary-color);
+    --app-tertiary-bg: var(--app-dark-tertiary-bg);
+    --app-tertiary-bg-rgb: var(--app-dark-tertiary-bg-rgb);
+    --app-border-color: var(--app-dark-border-color);
+    --app-secondary: var(--app-dark-secondary);
+    --app-secondary-rgb: var(--app-dark-secondary-rgb);
+    --app-success: var(--app-dark-success);
+    --app-success-rgb: var(--app-dark-success-rgb);
+    --app-danger: var(--app-dark-danger);
+    --app-danger-rgb: var(--app-dark-danger-rgb);
+    --app-warning: var(--app-dark-warning);
+    --app-warning-rgb: var(--app-dark-warning-rgb);
+    --app-info: var(--app-dark-info);
+    --app-info-rgb: var(--app-dark-info-rgb);
+    --app-on-primary: var(--app-dark-on-primary);
+    --app-sidebar-color: var(--app-dark-body-color);
+    --app-hero-start: var(--app-dark-surface-bg);
+    --app-hero-end: var(--app-dark-hero-end);
+    --app-overlay: var(--app-dark-overlay);
+    --app-shadow-color: var(--app-dark-shadow-color);
+    --app-shadow-strong-color: var(--app-dark-shadow-strong-color);
+}
+
+/* Keep Bootstrap utilities and components on the application palette. */
+:root,
+[data-bs-theme] {
+    --app-primary-subtle: color-mix(in srgb, var(--app-primary) 12%, var(--app-surface-bg));
+    --app-focus-ring: color-mix(in srgb, var(--app-primary) 25%, var(--app-transparent));
+    --bs-primary: var(--app-primary);
+    --bs-primary-rgb: var(--app-primary-rgb);
+    --bs-body-bg: var(--app-body-bg);
+    --bs-body-bg-rgb: var(--app-body-bg-rgb);
+    --bs-body-color: var(--app-body-color);
+    --bs-body-color-rgb: var(--app-body-color-rgb);
+    --bs-heading-color: var(--app-body-color);
+    --bs-emphasis-color: var(--app-body-color);
+    --bs-emphasis-color-rgb: var(--app-body-color-rgb);
+    --bs-secondary-color: var(--app-secondary-color);
+    --bs-secondary-bg: var(--app-tertiary-bg);
+    --bs-tertiary-color: var(--app-secondary-color);
+    --bs-tertiary-bg: var(--app-tertiary-bg);
+    --bs-tertiary-bg-rgb: var(--app-tertiary-bg-rgb);
+    --bs-border-color: var(--app-border-color);
+    --bs-border-color-translucent: var(--app-border-color);
+    --bs-link-color: var(--app-primary);
+    --bs-link-color-rgb: var(--app-primary-rgb);
+    --bs-link-hover-color: var(--app-primary-hover);
+    --bs-link-hover-color-rgb: var(--app-primary-hover-rgb);
+    --bs-focus-ring-color: var(--app-focus-ring);
+    --bs-box-shadow: 0 0.5rem 1rem var(--app-shadow-color);
+    --bs-box-shadow-sm: 0 0.125rem 0.25rem var(--app-shadow-color);
+    --bs-box-shadow-lg: 0 1rem 3rem var(--app-shadow-strong-color);
+    --bs-primary-text-emphasis: color-mix(in srgb, var(--app-primary) 65%, var(--app-body-color));
+    --bs-primary-bg-subtle: color-mix(in srgb, var(--app-primary) 12%, var(--app-surface-bg));
+    --bs-primary-border-subtle: color-mix(in srgb, var(--app-primary) 35%, var(--app-border-color));
+    --bs-secondary: var(--app-secondary);
+    --bs-secondary-rgb: var(--app-secondary-rgb);
+    --bs-secondary-text-emphasis: color-mix(in srgb, var(--app-secondary) 65%, var(--app-body-color));
+    --bs-secondary-bg-subtle: color-mix(in srgb, var(--app-secondary) 12%, var(--app-surface-bg));
+    --bs-secondary-border-subtle: color-mix(in srgb, var(--app-secondary) 35%, var(--app-border-color));
+    --bs-success: var(--app-success);
+    --bs-success-rgb: var(--app-success-rgb);
+    --bs-success-text-emphasis: color-mix(in srgb, var(--app-success) 65%, var(--app-body-color));
+    --bs-success-bg-subtle: color-mix(in srgb, var(--app-success) 12%, var(--app-surface-bg));
+    --bs-success-border-subtle: color-mix(in srgb, var(--app-success) 35%, var(--app-border-color));
+    --bs-danger: var(--app-danger);
+    --bs-danger-rgb: var(--app-danger-rgb);
+    --bs-danger-text-emphasis: color-mix(in srgb, var(--app-danger) 65%, var(--app-body-color));
+    --bs-danger-bg-subtle: color-mix(in srgb, var(--app-danger) 12%, var(--app-surface-bg));
+    --bs-danger-border-subtle: color-mix(in srgb, var(--app-danger) 35%, var(--app-border-color));
+    --bs-warning: var(--app-warning);
+    --bs-warning-rgb: var(--app-warning-rgb);
+    --bs-warning-text-emphasis: color-mix(in srgb, var(--app-warning) 65%, var(--app-body-color));
+    --bs-warning-bg-subtle: color-mix(in srgb, var(--app-warning) 12%, var(--app-surface-bg));
+    --bs-warning-border-subtle: color-mix(in srgb, var(--app-warning) 35%, var(--app-border-color));
+    --bs-info: var(--app-info);
+    --bs-info-rgb: var(--app-info-rgb);
+    --bs-info-text-emphasis: color-mix(in srgb, var(--app-info) 65%, var(--app-body-color));
+    --bs-info-bg-subtle: color-mix(in srgb, var(--app-info) 12%, var(--app-surface-bg));
+    --bs-info-border-subtle: color-mix(in srgb, var(--app-info) 35%, var(--app-border-color));
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Jost', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--bs-body-bg);
+}
+
+#root {
+    min-height: 100vh;
+}
+
+.btn-primary {
+    --bs-btn-color: var(--app-on-primary);
+    --bs-btn-bg: var(--app-primary);
+    --bs-btn-border-color: var(--app-primary);
+    --bs-btn-hover-color: var(--app-on-primary);
+    --bs-btn-hover-bg: var(--app-primary-hover);
+    --bs-btn-hover-border-color: var(--app-primary-hover);
+    --bs-btn-active-color: var(--app-on-primary);
+    --bs-btn-active-bg: var(--app-primary-hover);
+    --bs-btn-active-border-color: var(--app-primary-hover);
+    --bs-btn-disabled-color: var(--app-on-primary);
+    --bs-btn-disabled-bg: var(--app-primary);
+    --bs-btn-disabled-border-color: var(--app-primary);
+    --bs-btn-focus-shadow-rgb: var(--app-primary-rgb);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--app-primary);
+    --bs-btn-border-color: var(--app-primary);
+    --bs-btn-hover-color: var(--app-on-primary);
+    --bs-btn-hover-bg: var(--app-primary);
+    --bs-btn-hover-border-color: var(--app-primary);
+    --bs-btn-active-color: var(--app-on-primary);
+    --bs-btn-active-bg: var(--app-primary-hover);
+    --bs-btn-active-border-color: var(--app-primary-hover);
+    --bs-btn-disabled-color: var(--app-primary);
+    --bs-btn-disabled-border-color: var(--app-primary);
+    --bs-btn-focus-shadow-rgb: var(--app-primary-rgb);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--app-secondary-color);
+    --bs-btn-border-color: var(--app-border-color);
+    --bs-btn-hover-color: var(--app-body-color);
+    --bs-btn-hover-bg: var(--app-tertiary-bg);
+    --bs-btn-hover-border-color: var(--app-secondary-color);
+    --bs-btn-active-color: var(--app-body-color);
+    --bs-btn-active-bg: var(--app-tertiary-bg);
+    --bs-btn-active-border-color: var(--app-secondary-color);
+}
+
+.card {
+    --bs-card-bg: var(--app-surface-bg);
+    --bs-card-color: var(--app-body-color);
+}
+
+.modal-content {
+    --bs-modal-bg: var(--app-surface-bg);
+    --bs-modal-color: var(--app-body-color);
+}
+
+.table {
+    --bs-table-color: var(--app-body-color);
+    --bs-table-bg: var(--app-surface-bg);
+    --bs-table-border-color: var(--app-border-color);
+    --bs-table-striped-color: var(--app-body-color);
+    --bs-table-striped-bg: var(--app-tertiary-bg);
+    --bs-table-hover-color: var(--app-body-color);
+    --bs-table-hover-bg: var(--app-primary-subtle);
+    --bs-table-active-color: var(--app-body-color);
+    --bs-table-active-bg: var(--app-primary-subtle);
+}
+
+.dropdown-menu {
+    --bs-dropdown-bg: var(--app-surface-bg);
+    --bs-dropdown-link-hover-color: var(--app-body-color);
+    --bs-dropdown-link-hover-bg: var(--app-primary-subtle);
+    --bs-dropdown-link-active-color: var(--app-on-primary);
+    --bs-dropdown-link-active-bg: var(--app-primary);
+}
+
+.pagination {
+    --bs-pagination-bg: var(--app-surface-bg);
+    --bs-pagination-hover-color: var(--app-primary);
+    --bs-pagination-hover-bg: var(--app-primary-subtle);
+    --bs-pagination-focus-color: var(--app-primary);
+    --bs-pagination-focus-bg: var(--app-primary-subtle);
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem var(--app-focus-ring);
+    --bs-pagination-active-bg: var(--app-primary);
+    --bs-pagination-active-color: var(--app-on-primary);
+    --bs-pagination-active-border-color: var(--app-primary);
+}
+
+.form-control,
+.form-select {
+    background-color: var(--app-surface-bg);
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    border-color: var(--app-primary);
+    box-shadow: 0 0 0 0.25rem var(--app-focus-ring);
+}
+
+.form-control:focus {
+    background-color: var(--app-surface-bg);
+}
+
+.form-check-input:checked {
+    background-color: var(--app-primary);
+    border-color: var(--app-primary);
+}
+
+.text-app-primary {
+    color: var(--app-primary) !important;
+}
+
+.bg-app-primary {
+    background-color: var(--app-primary) !important;
+}
+
+.text-bg-primary,
+.text-bg-secondary,
+.text-bg-success,
+.text-bg-danger {
+    color: var(--app-on-primary) !important;
+}
+
+.table-actions {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.modal-backdrop {
+    --bs-backdrop-bg: var(--app-overlay);
+}
+
+.modal-backdrop.show {
+    opacity: 1;
+}
+
+.theme-toggle-button {
+    width: 38px;
+    height: 38px;
+}

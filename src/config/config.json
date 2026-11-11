@@ -1,0 +1,4 @@
+{
+    "apiUrl": "https://localhost:7119/api",
+    "DefaultNumberOfItemsTable": 20
+}
