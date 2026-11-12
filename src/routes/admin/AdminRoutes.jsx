@@ -18,6 +18,13 @@ import LogsListPage from '../../pages/Admin/Logs/LogsListPage/LogsListPage';
 import HistoricoUsuariosPage from '../../pages/Admin/HistoricoUsuarios/HistoricoUsuariosPage';
 import HistoricoRespostasListPage from '../../pages/Admin/HistoricoRespostas/HistoricoRespostasListPage';
 import HistoricoTabuadaDivertidaListPage from '../../pages/Admin/HIstoricoTabuadaDivertida/HistoricoTabuadaDivertidaListPage';
+import ResultadosJogosListPage from '../../pages/Admin/ResultadosJogos/ResultadosJogosListPage';
+import UsuariosCrudFormsListPage from '../../pages/Admin/UsuariosCrudForms/UsuariosCrudFormsListPage';
+import CrudFormsInstaladorListPage from '../../pages/Admin/CrudFormsInstalador/CrudFormsInstaladorListPage';
+import PessoasForDevListPage from '../../pages/Admin/PessoasForDev/PessoasForDevListPage';
+import EmpresaForDevListPage from '../../pages/Admin/EmpresaForDev/EmpresaForDevListPage';
+import CartaoCreditoDevToolsListPage from '../../pages/Admin/CartaoCreditoDevTools/CartaoCreditoDevToolsListPage';
+import VeiculosForDevListPage from '../../pages/Admin/VeiculosForDev/VeiculosForDevListPage';
 
 const AdminRoutes = () => (
   <AdminLayout>
@@ -45,6 +52,16 @@ const AdminRoutes = () => (
       <Route path="/historico-usuarios" element={<HistoricoUsuariosPage />} />
       <Route path="/historico-respostas" element={<HistoricoRespostasListPage />} />
       <Route path="/historico-tabuada-divertida" element={<HistoricoTabuadaDivertidaListPage />} />
+      <Route path="/tabuada-divertida" element={<Navigate to="resultados-jogos" replace />} />
+      <Route path="/tabuada-divertida/resultados-jogos" element={<ResultadosJogosListPage />} />
+      <Route path="/crud-forms" element={<Navigate to="usuarios" replace />} />
+      <Route path="/crud-forms/usuarios" element={<UsuariosCrudFormsListPage />} />
+      <Route path="/crud-forms/instaladores" element={<CrudFormsInstaladorListPage />} />
+      <Route path="/data-spark" element={<Navigate to="pessoas" replace />} />
+      <Route path="/data-spark/pessoas" element={<PessoasForDevListPage />} />
+      <Route path="/data-spark/empresas" element={<EmpresaForDevListPage />} />
+      <Route path="/data-spark/cartoes-credito" element={<CartaoCreditoDevToolsListPage />} />
+      <Route path="/data-spark/veiculos" element={<VeiculosForDevListPage />} />
       <Route path="/*" element={<Navigate to="/" replace />} />
       </Routes>
   </AdminLayout>

@@ -1,28 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../../../services/redux/authSlice';
 import { toast } from 'react-toastify';
-
-const menuItems = [
-    { path: '', label: 'Dashboard', icon: 'bi-speedometer2' },
-    { path: 'provas', label: 'Provas', icon: 'bi-book' },
-    { path: 'questoes', label: 'Questões', icon: 'bi-folder' },
-    { path: 'avaliacoes', label: 'Avaliações', icon: 'bi-clipboard-check' },
-    { path: 'respostas-avaliacoes', label: 'Respostas das Avaliações', icon: 'bi-ui-checks' },
-    { path: 'notas-de-corte', label: 'Notas de corte do Sisu', icon: 'bi-graph-up' },
-    { path: 'usuarios', label: 'Usuários', icon: 'bi-person' },
-    { path: 'historico-usuarios', label: 'Histórico de usuários', icon: 'bi-person-lines-fill' },
-    { path: 'historico-respostas', label: 'Histórico de respostas', icon: 'bi-clock-history' },
-    { path: 'historico-tabuada-divertida', label: 'Histórico Tabuada Divertida', icon: 'bi-calculator' },
-    { path: 'logs', label: 'Logs', icon: 'bi-journal-text' },
-];
+import { findActiveGroupKey, isItemActive, menuGroups } from './adminMenu';
 
 const AdminSidebar = ({ onNavigate }) => {
     const location = useLocation();
-    const currentSegment = location.pathname.split('/').filter(Boolean)[0] ?? '';
+    const activeGroupKey = findActiveGroupKey(location.pathname);
+    const [openGroups, setOpenGroups] = useState(() => new Set([activeGroupKey]));
+    const [lastActiveGroupKey, setLastActiveGroupKey] = useState(activeGroupKey);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    if (activeGroupKey !== lastActiveGroupKey) {
+        setLastActiveGroupKey(activeGroupKey);
+        if (activeGroupKey && !openGroups.has(activeGroupKey)) {
+            setOpenGroups(new Set(openGroups).add(activeGroupKey));
+        }
+    }
+
+    const toggleGroup = (key) => {
+        setOpenGroups((prev) => {
+            const next = new Set(prev);
+            if (next.has(key)) {
+                next.delete(key);
+            } else {
+                next.add(key);
+            }
+            return next;
+        });
+    };
 
     const handleLogout = () => {
         dispatch(logout());
@@ -37,12 +45,28 @@ const AdminSidebar = ({ onNavigate }) => {
                 <span className="fs-5 fw-semibold">Questões Aqui</span>
             </div>
             <nav className="nav nav-pills flex-column gap-1 flex-grow-1">
-                {menuItems.map((item) => (
-                    <Link key={item.path} to={`/${item.path}`} onClick={onNavigate} className={currentSegment === item.path ? 'nav-link active' : 'nav-link'}>
-                        <i className={`bi ${item.icon} me-2`} aria-hidden="true"></i>
-                        {item.label}
-                    </Link>
-                ))}
+                {menuGroups.map((group) => {
+                    const isOpen = openGroups.has(group.key);
+                    return (
+                        <div key={group.key} className="admin-sidebar-group">
+                            <button type="button" className="admin-sidebar-group-toggle nav-link w-100 d-flex align-items-center text-start" aria-expanded={isOpen} aria-controls={`admin-menu-${group.key}`} onClick={() => toggleGroup(group.key)}>
+                                <i className={`bi ${group.icon} me-2`} aria-hidden="true"></i>
+                                <span className="flex-grow-1 fw-semibold">{group.label}</span>
+                                <i className={`bi ${isOpen ? 'bi-chevron-down' : 'bi-chevron-right'} small`} aria-hidden="true"></i>
+                            </button>
+                            {isOpen && (
+                                <div id={`admin-menu-${group.key}`} className="admin-sidebar-group-items d-flex flex-column gap-1 mt-1">
+                                    {group.items.map((item) => (
+                                        <Link key={item.path} to={`/${item.path}`} onClick={onNavigate} className={isItemActive(item, location.pathname) ? 'nav-link active' : 'nav-link'}>
+                                            <i className={`bi ${item.icon} me-2`} aria-hidden="true"></i>
+                                            {item.label}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </nav>
             <button type="button" className="btn btn-outline-light w-100 mt-3" onClick={handleLogout}>
                 <i className="bi bi-box-arrow-right me-2" aria-hidden="true"></i>

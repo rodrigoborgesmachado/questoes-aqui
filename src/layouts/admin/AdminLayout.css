@@ -44,6 +44,15 @@
     background-color: var(--app-sidebar-active-bg);
 }
 
+.admin-sidebar-group-toggle {
+    border: 0;
+    background: none;
+}
+
+.admin-sidebar-group-items {
+    padding-left: 0.75rem;
+}
+
 .admin-main {
     min-width: 0;
 }
