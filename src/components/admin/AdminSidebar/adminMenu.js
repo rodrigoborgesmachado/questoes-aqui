@@ -7,6 +7,7 @@ export const menuGroups = [
             { path: '', label: 'Dashboard', icon: 'bi-speedometer2' },
             { path: 'provas', label: 'Provas', icon: 'bi-book' },
             { path: 'questoes', label: 'Questões', icon: 'bi-folder' },
+            { path: 'reportes-questoes', label: 'Reportes de questões', icon: 'bi-flag' },
             { path: 'avaliacoes', label: 'Avaliações', icon: 'bi-clipboard-check' },
             { path: 'respostas-avaliacoes', label: 'Respostas das Avaliações', icon: 'bi-ui-checks' },
             { path: 'notas-de-corte', label: 'Notas de corte do Sisu', icon: 'bi-graph-up' },

@@ -1,5 +1,6 @@
 import React from 'react';
 import { buildQuestionHtml, getAnexoSource } from '../../../utils/questionHtml';
+import ReportQuestion from '../ReportQuestion/ReportQuestion';
 import './QuestionView.css';
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
@@ -44,6 +45,7 @@ const QuestionView = ({ questao, selectedCode = null, correctCode = null, disabl
                 );
             })}
         </div>
+        <ReportQuestion key={questao.codigo} questaoId={questao.codigo} />
     </article>
 );
 

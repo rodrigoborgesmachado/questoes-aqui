@@ -12,6 +12,12 @@ test('settings group holds logs and sent emails', () => {
     assert.equal(menuGroups.find((group) => group.key === 'questoes-aqui').items.some((item) => item.path === 'logs'), false);
 });
 
+test('question reports are listed in the Questões Aqui group', () => {
+    const questoesAqui = menuGroups.find((group) => group.key === 'questoes-aqui');
+    assert.equal(questoesAqui.items.some((item) => item.path === 'reportes-questoes'), true);
+    assert.equal(findActiveGroupKey('/reportes-questoes'), 'questoes-aqui');
+});
+
 test('dashboard is active only on the root path', () => {
     const dashboard = { path: '' };
     assert.equal(isItemActive(dashboard, '/'), true);

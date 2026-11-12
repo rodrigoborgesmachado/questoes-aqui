@@ -6,6 +6,7 @@ import ProvaListPage from '../../pages/Admin/Prova/ProvaListPage/ProvaListPage';
 import ProvaForm from '../../pages/Admin/Prova/ProvaForm/ProvaForm';
 import QuestoesListPage from '../../pages/Admin/Questoes/QuestoesListPage/QuestoesListPage';
 import QuestoesForm from '../../pages/Admin/Questoes/QuestoesForm/QuestoesForm';
+import ReportesQuestoesListPage from '../../pages/Admin/ReportesQuestoes/ReportesQuestoesListPage';
 import AvaliacaoListPage from '../../pages/Admin/Avaliacao/AvaliacaoListPage/AvaliacaoListPage';
 import AvaliacaoPage from '../../pages/Admin/Avaliacao/AvaliacaoPage/AvaliacaoPage';
 import RespostasavaliacoesListPage from '../../pages/Admin/Respostasavaliacoes/RespostasavaliacoesListPage/RespostasavaliacoesListPage';
@@ -40,6 +41,7 @@ const AdminRoutes = () => (
       <Route path="/questoes" element={<QuestoesListPage key="geral" />} />
       <Route path="/questoes/:id" element={<Navigate to="editar" replace />} />
       <Route path="/questoes/:id/editar" element={<QuestoesForm />} />
+      <Route path="/reportes-questoes" element={<ReportesQuestoesListPage />} />
       <Route path="/avaliacoes" element={<AvaliacaoListPage />} />
       <Route path="/avaliacoes/:id" element={<AvaliacaoPage />} />
       <Route path="/respostas-avaliacoes" element={<RespostasavaliacoesListPage />} />
