@@ -45,6 +45,11 @@ const usuariosApi = {
         const response = await api.put('/Usuarios/updateSenha', {}, { params: { oldPass, newPass } });
         return response.data;
     },
+
+    updateAdmin: async (id, admin) => {
+        const response = await api.put('/Usuarios/updateAdmin', {}, { params: { id, admin } });
+        return response.data;
+    },
 };
 
 export default usuariosApi;

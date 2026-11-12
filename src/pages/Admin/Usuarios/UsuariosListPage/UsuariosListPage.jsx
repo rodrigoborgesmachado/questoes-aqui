@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import usuariosApi from '../../../../services/apiServices/usuariosApi';
 import { setLoading } from '../../../../services/redux/loadingSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserCode } from '../../../../services/redux/authSlice';
 import configService from '../../../../services/configService';
 import Pagination from '../../../../components/common/Pagination/Pagination';
 import { toast } from 'react-toastify';
 import { putDateOnPattern } from '../../../../utils/functions';
 import FilterComponent from '../../../../components/admin/FilterComponent/FilterComponent';
 import BaseModal from '../../../../components/common/Modals/BaseModal/BaseModal';
+import ConfirmModal from '../../../../components/common/Modals/ConfirmModal/ConfirmModal';
 
 const UsuariosListPage = () => {
     const dispatch = useDispatch();
+    const userCode = useSelector(selectUserCode);
     const [items, setItems] = useState([]);
     const [selected, setSelected] = useState(null);
+    const [itemToUpdateAdmin, setItemToUpdateAdmin] = useState(null);
+    const [reload, setReload] = useState(0);
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [totalItens, setTotalItens] = useState(0);
@@ -33,7 +38,7 @@ const UsuariosListPage = () => {
             }
         };
         fetchItems();
-    }, [page, quantity, searchTerm, dispatch]);
+    }, [page, quantity, searchTerm, reload, dispatch]);
 
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {
@@ -62,11 +67,39 @@ const UsuariosListPage = () => {
         }
     };
 
+    const updateAdmin = async (item) => {
+        setItemToUpdateAdmin(null);
+        dispatch(setLoading(true));
+        try {
+            const response = await usuariosApi.updateAdmin(item.Id, !isAdmin(item));
+            if (response.success) {
+                toast.success('Perfil atualizado!');
+                setReload((value) => value + 1);
+            } else {
+                toast.warn('Não foi possível atualizar o perfil.');
+            }
+        } catch {
+            toast.warn('Não foi possível atualizar o perfil.');
+        } finally {
+            dispatch(setLoading(false));
+        }
+    };
+
+    const openUpdateAdmin = (item) => {
+        setSelected(null);
+        setItemToUpdateAdmin(item);
+    };
+
     const isVerified = (item) => `${item.isVerified}` === '1';
+    const isAdmin = (item) => `${item.admin}` === '1';
+    const canUpdateAdmin = (item) => !isAdmin(item) || `${item.Id}` !== `${userCode}`;
+    const adminLabel = (item) => (isAdmin(item) ? 'Remover admin' : 'Tornar admin');
 
     return (
         <div className="container-fluid py-4">
-            <BaseModal isOpen={Boolean(selected)} title="Usuário" onClose={() => setSelected(null)}>
+            <BaseModal isOpen={Boolean(selected)} title="Usuário" onClose={() => setSelected(null)} footer={selected && canUpdateAdmin(selected) && (
+                <button type="button" className="btn btn-outline-primary" onClick={() => openUpdateAdmin(selected)}>{adminLabel(selected)}</button>
+            )}>
                 {selected && (
                     <dl className="row mb-0">
                         <dt className="col-sm-4 text-body-secondary">Id</dt>
@@ -92,6 +125,7 @@ const UsuariosListPage = () => {
                     </dl>
                 )}
             </BaseModal>
+            <ConfirmModal isOpen={Boolean(itemToUpdateAdmin)} title={itemToUpdateAdmin ? adminLabel(itemToUpdateAdmin) : ''} message={itemToUpdateAdmin ? `Deseja ${isAdmin(itemToUpdateAdmin) ? 'remover o acesso de admin de' : 'tornar admin o usuário'} ${itemToUpdateAdmin.nome}?` : ''} confirmData={itemToUpdateAdmin} onYes={updateAdmin} onNo={() => setItemToUpdateAdmin(null)} />
             <div className="mb-4">
                 <h1 className="h3 mb-1">Usuários</h1>
                 <p className="text-body-secondary mb-0">Usuários cadastrados no Questões Aqui.</p>
@@ -131,6 +165,11 @@ const UsuariosListPage = () => {
                                                 {!isVerified(item) && (
                                                     <button type="button" className="btn btn-outline-primary" title="Reenviar email de confirmação" aria-label="Reenviar email de confirmação" onClick={() => resendEmail(item.email)}>
                                                         <i className="bi bi-envelope" aria-hidden="true"></i>
+                                                    </button>
+                                                )}
+                                                {canUpdateAdmin(item) && (
+                                                    <button type="button" className="btn btn-outline-primary" title={adminLabel(item)} aria-label={adminLabel(item)} onClick={() => openUpdateAdmin(item)}>
+                                                        <i className={`bi ${isAdmin(item) ? 'bi-person-dash' : 'bi-person-gear'}`} aria-hidden="true"></i>
                                                     </button>
                                                 )}
                                                 <button type="button" className="btn btn-outline-secondary" title="Visualizar" aria-label="Visualizar" onClick={() => setSelected(item)}>
