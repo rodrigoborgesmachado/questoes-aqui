@@ -6,6 +6,7 @@ import { setLoading } from '../../../services/redux/loadingSlice';
 import questoesApi from '../../../services/apiServices/questoesApi';
 import respostasQuestoesApi from '../../../services/apiServices/respostasQuestoesApi';
 import QuestionView from '../../../components/client/QuestionView/QuestionView';
+import QuestionComments from '../../../components/client/QuestionComments/QuestionComments';
 
 const FILTER_KEYS = ['id', 'codigoProva', 'tipo', 'randon', 'materias', 'bancas', 'tipos', 'provas', 'assuntos'];
 
@@ -113,6 +114,7 @@ const PraticarPage = () => {
                                 {answer.certa ? 'Resposta correta! Mandou bem.' : 'Resposta incorreta. A alternativa correta está destacada em verde.'}
                             </div>
                         )}
+                        {answer && <QuestionComments questaoId={questao.Id} />}
                     </div>
                     {showNavigation && (
                         <div className="card-footer bg-body border-0 d-flex justify-content-between gap-2 p-3">

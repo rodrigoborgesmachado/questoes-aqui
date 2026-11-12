@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { setLoading } from '../../../../services/redux/loadingSlice';
 import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesApi';
 import QuestionView from '../../../../components/client/QuestionView/QuestionView';
+import QuestionComments from '../../../../components/client/QuestionComments/QuestionComments';
 
 const QuestaoPublicaPage = () => {
     const { id } = useParams();
@@ -12,6 +13,7 @@ const QuestaoPublicaPage = () => {
     const navigate = useNavigate();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [questao, setQuestao] = useState(null);
+    const [showComments, setShowComments] = useState(false);
     const answerUrl = `/praticar?id=${id}`;
 
     useEffect(() => {
@@ -44,6 +46,14 @@ const QuestaoPublicaPage = () => {
                             </span>
                             <Link to={answerUrl} className="btn btn-primary">Responder esta questão</Link>
                         </div>
+                        {!isAuthenticated && (showComments ? <QuestionComments questaoId={Number(id)} /> : (
+                            <div className="mt-4 pt-4 border-top">
+                                <button type="button" className="btn btn-outline-secondary btn-sm" onClick={() => setShowComments(true)}>
+                                    <i className="bi bi-chat-left-text me-1" aria-hidden="true"></i>Ver comentários
+                                </button>
+                                <p className="small text-body-secondary mt-2 mb-0">Os comentários podem revelar a resposta.</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             )}
