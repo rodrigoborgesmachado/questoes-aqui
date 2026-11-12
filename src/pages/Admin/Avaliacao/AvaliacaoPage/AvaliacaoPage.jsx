@@ -4,7 +4,8 @@ import { setLoading } from '../../../../services/redux/loadingSlice';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { putDateOnPattern } from '../../../../utils/functions';
+import { copyToMemory, putDateOnPattern } from '../../../../utils/functions';
+import { getAvaliacaoAlunoUrl } from '../../../../utils/avaliacaoAluno';
 
 const AvaliacaoPage = () => {
     const navigate = useNavigate();
@@ -26,6 +27,14 @@ const AvaliacaoPage = () => {
         };
         fetchItem();
     }, [id, dispatch]);
+
+    const linkAluno = item.id ? `${window.location.origin}${getAvaliacaoAlunoUrl(item.id, item.isPublic === '1' ? null : item.key)}` : '';
+
+    const copyLinkAluno = async () => {
+        if (await copyToMemory(linkAluno)) {
+            toast.success('Link copiado.');
+        }
+    };
 
     return (
         <div className="container-fluid py-4">
@@ -50,6 +59,11 @@ const AvaliacaoPage = () => {
                         <dd className="col-sm-9">{item.isPublic === '1' ? 'Sim' : 'Não'}</dd>
                         <dt className="col-sm-3 text-body-secondary">Chave</dt>
                         <dd className="col-sm-9 text-break">{item.key ?? '-'}</dd>
+                        <dt className="col-sm-3 text-body-secondary">Link do aluno</dt>
+                        <dd className="col-sm-9 text-break">
+                            {linkAluno || '-'}
+                            {linkAluno && <button type="button" className="btn btn-outline-secondary btn-sm ms-2" onClick={copyLinkAluno} aria-label="Copiar link do aluno"><i className="bi bi-clipboard" aria-hidden="true"></i></button>}
+                        </dd>
                         <dt className="col-sm-3 text-body-secondary">Status</dt>
                         <dd className="col-sm-9">{item.isActive === '1' ? 'Ativo' : 'Desativado'}</dd>
                         <dt className="col-sm-3 text-body-secondary">Criado</dt>

@@ -17,6 +17,8 @@ import PraticarPage from '../../pages/client/Praticar/PraticarPage';
 import SimuladosPage from '../../pages/client/Simulados/SimuladosPage/SimuladosPage';
 import SimuladoPage from '../../pages/client/Simulados/SimuladoPage/SimuladoPage';
 import SimuladoResultadoPage from '../../pages/client/Simulados/SimuladoResultadoPage/SimuladoResultadoPage';
+import AvaliacaoResponderPage from '../../pages/client/Avaliacoes/AvaliacaoResponderPage/AvaliacaoResponderPage';
+import AvaliacaoResultadoPage from '../../pages/client/Avaliacoes/AvaliacaoResultadoPage/AvaliacaoResultadoPage';
 import HistoricoPage from '../../pages/client/Historico/HistoricoPage';
 import DesempenhoPage from '../../pages/client/Desempenho/DesempenhoPage';
 import RankingPage from '../../pages/client/Ranking/RankingPage';
@@ -58,6 +60,8 @@ const ClientRoutes = () => {
                     <Route path="/simulados" element={<SimuladosPage />} />
                     <Route path="/simulados/prova/:provaId" element={<SimuladoPage />} />
                     <Route path="/simulados/resultado/:id" element={<SimuladoResultadoPage />} />
+                    <Route path="/avaliacoes/:id" element={<AvaliacaoResponderPage />} />
+                    <Route path="/avaliacoes/:id/resultado" element={<AvaliacaoResultadoPage />} />
                     <Route path="/historico" element={<HistoricoPage />} />
                     <Route path="/desempenho" element={<DesempenhoPage />} />
                     <Route path="/ranking" element={<RankingPage />} />
