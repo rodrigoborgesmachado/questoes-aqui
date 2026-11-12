@@ -5,6 +5,7 @@ import tokenApi from '../../../services/apiServices/token';
 import MessageModal from '../../../components/common/Modals/MessageModal/MessageModal';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import '../LoginPage/LoginPage.css';
 
 const RecoverPasswordPage = () => {
@@ -35,8 +36,11 @@ const RecoverPasswordPage = () => {
             <MessageModal isOpen={isMessageOpen} click={() => navigate('/entrar')} message="Você receberá um email com as instruções para recuperação da senha!" />
             <div className="card border-0 shadow-lg login-card">
                 <div className="card-body p-4 p-md-5">
-                    <h1 className="h3 mb-2">Questões Aqui</h1>
-                    <p className="text-body-secondary mb-4">Recuperação de senha</p>
+                    <div className="text-center mb-4">
+                        <BrandLogo size="lg" to="/" />
+                    </div>
+                    <h1 className="h3 mb-2">Recuperar senha</h1>
+                    <p className="text-body-secondary mb-4">Informe seu email para receber as instruções.</p>
                     <form onSubmit={handleRecover}>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email</label>

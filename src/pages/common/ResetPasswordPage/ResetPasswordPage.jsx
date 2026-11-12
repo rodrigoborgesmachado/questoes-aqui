@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setLoading } from '../../../services/redux/loadingSlice';
 import tokenApi from '../../../services/apiServices/token';
 import { toast } from 'react-toastify';
+import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import '../LoginPage/LoginPage.css';
 
 const ResetPasswordPage = () => {
@@ -39,7 +40,10 @@ const ResetPasswordPage = () => {
         <main className="login-page">
             <div className="card border-0 shadow-lg login-card">
                 <div className="card-body p-4 p-md-5">
-                    <h1 className="h3 mb-2">Questões Aqui</h1>
+                    <div className="text-center mb-4">
+                        <BrandLogo size="lg" to="/" />
+                    </div>
+                    <h1 className="h3 mb-2">Nova senha</h1>
                     <p className="text-body-secondary mb-4">Defina uma nova senha para acessar sua conta.</p>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">

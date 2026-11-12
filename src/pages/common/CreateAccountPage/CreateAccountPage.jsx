@@ -6,6 +6,7 @@ import { setLoading } from '../../../services/redux/loadingSlice';
 import usuariosApi from '../../../services/apiServices/usuariosApi';
 import MessageModal from '../../../components/common/Modals/MessageModal/MessageModal';
 import { stringToHash } from '../../../utils/passwordHash';
+import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import '../LoginPage/LoginPage.css';
 
 const PERFIL_ALUNO = 0;
@@ -54,7 +55,10 @@ const CreateAccountPage = () => {
             <MessageModal isOpen={isMessageOpen} click={() => navigate('/entrar')} optionText="Ir para o login" message="Conta criada! Enviamos um email com o link para validar a sua conta." />
             <div className="card border-0 shadow-lg login-card">
                 <div className="card-body p-4 p-md-5">
-                    <h1 className="h3 mb-2">Questões Aqui</h1>
+                    <div className="text-center mb-4">
+                        <BrandLogo size="lg" to="/" />
+                    </div>
+                    <h1 className="h3 mb-2">Criar conta</h1>
                     <p className="text-body-secondary mb-4">Crie sua conta e comece a praticar</p>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">

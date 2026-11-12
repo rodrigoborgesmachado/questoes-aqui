@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login } from '../../../services/redux/authSlice';
 import tokenApi from '../../../services/apiServices/token';
+import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import './LoginPage.css';
 import { setLoading } from '../../../services/redux/loadingSlice';
 
@@ -48,7 +49,10 @@ const LoginPage = () => {
         <main className="login-page">
             <div className="card border-0 shadow-lg login-card">
                 <div className="card-body p-4 p-md-5">
-                    <h1 className="h3 mb-2">Questões Aqui</h1>
+                    <div className="text-center mb-4">
+                        <BrandLogo size="lg" to="/" />
+                    </div>
+                    <h1 className="h3 mb-2">Entrar</h1>
                     <p className="text-body-secondary mb-4">Acesse sua conta</p>
                     {searchParams.get('returnUrl') && <div className="alert alert-info py-2 small" role="status">Entre na sua conta para continuar.</div>}
                     <form onSubmit={handleSubmit}>

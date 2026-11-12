@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import usuariosApi from '../../../services/apiServices/usuariosApi';
+import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import '../LoginPage/LoginPage.css';
 
 const ValidateAccountPage = () => {
@@ -23,7 +24,10 @@ const ValidateAccountPage = () => {
         <main className="login-page">
             <div className="card border-0 shadow-lg login-card">
                 <div className="card-body p-4 p-md-5 text-center">
-                    <h1 className="h3 mb-4">Questões Aqui</h1>
+                    <div className="mb-4">
+                        <BrandLogo size="lg" to="/" />
+                    </div>
+                    <h1 className="h3 mb-4">Validar conta</h1>
                     {status === 'loading' && (
                         <>
                             <div className="spinner-border text-app-primary mb-3" role="status"></div>

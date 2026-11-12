@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { logout, selectUserName } from '../../../services/redux/authSlice';
 import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
+import BrandLogo from '../../common/BrandLogo/BrandLogo';
 
 const iftmMenuItem = { path: '/provas?tipos=IFTM', label: 'IFTM' };
 const sisuMenuItem = {
@@ -98,10 +99,7 @@ const ClientHeader = () => {
         <header className="client-header bg-body border-bottom shadow-sm">
             <nav className="navbar navbar-expand-lg py-2">
                 <div className="container-xl">
-                    <Link to="/" className="navbar-brand d-flex align-items-center gap-2 fw-semibold" onClick={closeMenus}>
-                        <i className="bi bi-mortarboard-fill fs-4" aria-hidden="true"></i>
-                        Questões Aqui
-                    </Link>
+                    <BrandLogo to="/" className="navbar-brand" onClick={closeMenus} />
                     <div className="d-flex align-items-center gap-2 order-lg-last">
                         <button
                             type="button"

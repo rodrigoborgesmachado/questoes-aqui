@@ -1,0 +1,4 @@
+.brand-logo,
+.brand-logo:hover {
+    color: var(--app-primary);
+}
