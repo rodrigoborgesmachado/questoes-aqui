@@ -45,7 +45,7 @@ const QuestionView = ({ questao, selectedCode = null, correctCode = null, disabl
                 );
             })}
         </div>
-        <ReportQuestion key={questao.codigo} questaoId={questao.codigo} />
+        <ReportQuestion key={questao.Id} questaoId={questao.Id} />
     </article>
 );
 
