@@ -13,7 +13,6 @@ export const menuGroups = [
             { path: 'usuarios', label: 'Usuários', icon: 'bi-person' },
             { path: 'historico-usuarios', label: 'Histórico de usuários', icon: 'bi-person-lines-fill' },
             { path: 'historico-respostas', label: 'Histórico de respostas', icon: 'bi-clock-history' },
-            { path: 'logs', label: 'Logs', icon: 'bi-journal-text' },
         ],
     },
     {
@@ -43,6 +42,15 @@ export const menuGroups = [
             { path: 'data-spark/empresas', label: 'Empresas', icon: 'bi-building' },
             { path: 'data-spark/cartoes-credito', label: 'Cartões de crédito', icon: 'bi-credit-card' },
             { path: 'data-spark/veiculos', label: 'Veículos', icon: 'bi-car-front' },
+        ],
+    },
+    {
+        key: 'configuracoes',
+        label: 'Configurações',
+        icon: 'bi-gear',
+        items: [
+            { path: 'logs', label: 'Logs', icon: 'bi-journal-text' },
+            { path: 'emails', label: 'Emails enviados', icon: 'bi-envelope' },
         ],
     },
 ];

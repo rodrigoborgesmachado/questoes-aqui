@@ -15,6 +15,7 @@ import NotascortesisuPage from '../../pages/Admin/Notascortesisu/NotascortesisuP
 import NotascortesisuForm from '../../pages/Admin/Notascortesisu/NotascortesisuForm/NotascortesisuForm';
 import UsuariosListPage from '../../pages/Admin/Usuarios/UsuariosListPage/UsuariosListPage';
 import LogsListPage from '../../pages/Admin/Logs/LogsListPage/LogsListPage';
+import EmailsListPage from '../../pages/Admin/Emails/EmailsListPage/EmailsListPage';
 import HistoricoUsuariosPage from '../../pages/Admin/HistoricoUsuarios/HistoricoUsuariosPage';
 import HistoricoRespostasListPage from '../../pages/Admin/HistoricoRespostas/HistoricoRespostasListPage';
 import HistoricoTabuadaDivertidaListPage from '../../pages/Admin/HIstoricoTabuadaDivertida/HistoricoTabuadaDivertidaListPage';
@@ -49,6 +50,7 @@ const AdminRoutes = () => (
       <Route path="/notas-de-corte/:id" element={<NotascortesisuPage />} />
       <Route path="/usuarios" element={<UsuariosListPage />} />
       <Route path="/logs" element={<LogsListPage />} />
+      <Route path="/emails" element={<EmailsListPage />} />
       <Route path="/historico-usuarios" element={<HistoricoUsuariosPage />} />
       <Route path="/historico-respostas" element={<HistoricoRespostasListPage />} />
       <Route path="/historico-tabuada-divertida" element={<HistoricoTabuadaDivertidaListPage />} />
