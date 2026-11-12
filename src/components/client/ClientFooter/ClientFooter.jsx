@@ -29,6 +29,7 @@ const ClientFooter = () => (
                         <li><Link to="/privacidade" className="link-secondary">Privacidade</Link></li>
                         <li><Link to="/termos" className="link-secondary">Termos</Link></li>
                         <li><Link to="/contato" className="link-secondary">Contato</Link></li>
+                        <li><a href="https://www.tabuadadivertida.com/?utm_source=questoesaqui&utm_medium=footer" target="_blank" rel="noopener noreferrer" className="link-secondary">Tabuada Divertida<i className="bi bi-arrow-up-right ms-2" aria-hidden="true"></i></a></li>
                     </ul>
                 </nav>
             </div>
