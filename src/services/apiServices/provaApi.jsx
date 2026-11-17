@@ -36,13 +36,18 @@ const provaApi = {
         return response.data;
     },
 
-    getAllBancas: async () => {
-        const response = await api.get('/Prova/GetAllBancas');
+    getAllBancas: async (params) => {
+        const response = await api.get('/Prova/GetAllBancas', { params });
         return response.data;
     },
 
-    getAllTipos: async () => {
-        const response = await api.get('/Prova/GetAllTipos');
+    getAllTipos: async (params) => {
+        const response = await api.get('/Prova/GetAllTipos', { params });
+        return response.data;
+    },
+
+    getAllProvasName: async (params) => {
+        const response = await api.get('/Prova/GetAllProvasName', { params });
         return response.data;
     },
 

@@ -15,8 +15,10 @@ const ProvaListPage = () => {
     const [page, setPage] = useState(1);
     const [banca, setBanca] = useState('');
     const [tipo, setTipo] = useState('');
+    const [prova, setProva] = useState('');
     const [bancas, setBancas] = useState([]);
     const [tipos, setTipos] = useState([]);
+    const [provas, setProvas] = useState([]);
     const [totalItens, setTotalItens] = useState(0);
     const [refresh, setRefresh] = useState(0);
     const quantity = configService.getDefaultNumberOfItemsTable();
@@ -25,21 +27,26 @@ const ProvaListPage = () => {
     useEffect(() => {
         const fetchFilters = async () => {
             try {
-                const [bancasResponse, tiposResponse] = await Promise.all([provaApi.getAllBancas(), provaApi.getAllTipos()]);
+                const [bancasResponse, tiposResponse, provasResponse] = await Promise.all([
+                    provaApi.getAllBancas({ provas: prova || undefined, tipos: tipo || undefined }),
+                    provaApi.getAllTipos({ bancas: banca || undefined, provas: prova || undefined }),
+                    provaApi.getAllProvasName({ bancas: banca || undefined, tipos: tipo || undefined }),
+                ]);
                 setBancas(bancasResponse.object || []);
                 setTipos(tiposResponse.object || []);
+                setProvas(provasResponse.object || []);
             } catch {
                 toast.error('Erro ao buscar os filtros.');
             }
         };
         fetchFilters();
-    }, []);
+    }, [banca, tipo, prova]);
 
     useEffect(() => {
         const fetchItems = async () => {
             dispatch(setLoading(true));
             try {
-                const response = await provaApi.getPaginated({ page, quantity, bancas: banca || undefined, tipos: tipo || undefined });
+                const response = await provaApi.getPaginated({ page, quantity, bancas: banca || undefined, tipos: tipo || undefined, provas: prova || undefined });
                 setItems(response.object || []);
                 setTotalItens(response.total || 0);
             } catch {
@@ -49,7 +56,7 @@ const ProvaListPage = () => {
             }
         };
         fetchItems();
-    }, [page, quantity, banca, tipo, dispatch, refresh]);
+    }, [page, quantity, banca, tipo, prova, dispatch, refresh]);
 
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {
@@ -118,6 +125,13 @@ const ProvaListPage = () => {
                             <select id="tipo" className="form-select" value={tipo} onChange={(event) => { setTipo(event.target.value); setPage(1); }}>
                                 <option value="">Todos</option>
                                 {tipos.map((item) => <option key={item} value={item}>{item}</option>)}
+                            </select>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <label htmlFor="prova" className="form-label">Prova</label>
+                            <select id="prova" className="form-select" value={prova} onChange={(event) => { setProva(event.target.value); setPage(1); }}>
+                                <option value="">Todas</option>
+                                {provas.map((item) => <option key={item} value={item}>{item}</option>)}
                             </select>
                         </div>
                     </div>
