@@ -7,6 +7,7 @@ import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
 import BrandLogo from '../../common/BrandLogo/BrandLogo';
 
 const iftmMenuItem = { path: '/provas?tipos=IFTM', label: 'IFTM' };
+const ufuMenuItem = { path: '/provas?tipos=UFU', label: 'UFU' };
 const sisuMenuItem = {
     path: '/sisu', label: 'Sisu', children: [
         { path: '/sisu/notas-de-corte', label: 'Notas de corte', icon: 'bi-mortarboard' },
@@ -17,6 +18,7 @@ const sisuMenuItem = {
 const menuItems = [
     { path: '/', label: 'Início', end: true },
     iftmMenuItem,
+    ufuMenuItem,
     { path: '/provas', label: 'Provas' },
     { path: '/questoes', label: 'Questões' },
     sisuMenuItem,
@@ -27,6 +29,7 @@ const menuItems = [
 const publicMenuItems = [
     { path: '/', label: 'Início', end: true },
     iftmMenuItem,
+    ufuMenuItem,
     { path: '/provas', label: 'Provas' },
     { path: '/questoes', label: 'Questões' },
     sisuMenuItem,
@@ -45,7 +48,8 @@ const ClientHeader = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const isIftmActive = location.pathname === '/provas' && new URLSearchParams(location.search).get('tipos') === 'IFTM';
-    const isProvasActive = (location.pathname === '/provas' || location.pathname.startsWith('/provas/')) && !isIftmActive;
+    const isUfuActive = location.pathname === '/provas' && new URLSearchParams(location.search).get('tipos') === 'UFU';
+    const isProvasActive = (location.pathname === '/provas' || location.pathname.startsWith('/provas/')) && !isIftmActive && !isUfuActive;
     const isSisuActive = location.pathname.startsWith('/sisu/');
     const userName = useSelector(selectUserName);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -174,8 +178,8 @@ const ClientHeader = () => {
                                         </li>
                                     );
                                 }
-                                const isProvasLink = item === iftmMenuItem || item.path === '/provas';
-                                const isActive = item === iftmMenuItem ? isIftmActive : isProvasActive;
+                                const isProvasLink = item === iftmMenuItem || item === ufuMenuItem || item.path === '/provas';
+                                const isActive = item === iftmMenuItem ? isIftmActive : item === ufuMenuItem ? isUfuActive : isProvasActive;
                                 return (
                                     <li key={item.path} className="nav-item">
                                         {isProvasLink ? (
