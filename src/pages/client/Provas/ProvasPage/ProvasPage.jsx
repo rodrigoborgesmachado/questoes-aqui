@@ -15,40 +15,36 @@ const ProvasPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const bancasFilter = searchParams.get('bancas') || '';
     const tiposFilter = searchParams.get('tipos') || '';
-    const provasFilter = searchParams.get('provas') || '';
     const requestedPage = Number(searchParams.get('page'));
     const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
     const [items, setItems] = useState([]);
     const [totalItens, setTotalItens] = useState(0);
     const [bancas, setBancas] = useState([]);
     const [tipos, setTipos] = useState([]);
-    const [provas, setProvas] = useState([]);
     const totalPages = Math.ceil(totalItens / QUANTITY);
 
     useEffect(() => {
         const fetchOptions = async () => {
             try {
-                const [bancasResponse, tiposResponse, provasResponse] = await Promise.all([
-                    provaApi.getAllBancas({ provas: provasFilter || undefined, tipos: tiposFilter || undefined }),
-                    provaApi.getAllTipos({ bancas: bancasFilter || undefined, provas: provasFilter || undefined }),
-                    provaApi.getAllProvasName({ bancas: bancasFilter || undefined, tipos: tiposFilter || undefined }),
+                const [bancasResponse, tiposResponse] = await Promise.all([
+                    provaApi.getAllBancas({ tipos: tiposFilter || undefined }),
+                    provaApi.getAllTipos({ bancas: bancasFilter || undefined }),
                 ]);
                 setBancas(bancasResponse.object || []);
                 setTipos(tiposResponse.object || []);
-                setProvas(provasResponse.object || []);
             } catch {
                 toast.error('Erro ao buscar os filtros.');
             }
         };
         fetchOptions();
-    }, [bancasFilter, tiposFilter, provasFilter]);
+    }, [bancasFilter, tiposFilter]);
 
     useEffect(() => {
         const lifecycle = new AbortController();
         const fetchItems = async () => {
             dispatch(setLoading(true));
             try {
-                const params = { page, quantity: QUANTITY, bancas: bancasFilter || undefined, tipos: tiposFilter || undefined, provas: provasFilter || undefined };
+                const params = { page, quantity: QUANTITY, bancas: bancasFilter || undefined, tipos: tiposFilter || undefined };
                 const response = isAuthenticated ? await provaApi.getPaginated(params) : await publicQuestoesApi.getProvasPaginated(params);
                 if (!lifecycle.signal.aborted) {
                     setItems(response.object || []);
@@ -64,7 +60,7 @@ const ProvasPage = () => {
         };
         fetchItems();
         return () => { lifecycle.abort(); };
-    }, [page, bancasFilter, tiposFilter, provasFilter, isAuthenticated, dispatch]);
+    }, [page, bancasFilter, tiposFilter, isAuthenticated, dispatch]);
 
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
@@ -105,10 +101,6 @@ const ProvasPage = () => {
                     <select name="tipos" className="form-select" value={tiposFilter} onChange={handleFilterChange} aria-label="Filtrar por tipo">
                         <option value="">Todos os tipos</option>
                         {tipos.map((tipo) => <option key={tipo} value={tipo}>{tipo}</option>)}
-                    </select>
-                    <select name="provas" className="form-select" value={provasFilter} onChange={handleFilterChange} aria-label="Filtrar por prova">
-                        <option value="">Todas as provas</option>
-                        {provas.map((prova) => <option key={prova} value={prova}>{prova}</option>)}
                     </select>
                 </div>
             </div>
