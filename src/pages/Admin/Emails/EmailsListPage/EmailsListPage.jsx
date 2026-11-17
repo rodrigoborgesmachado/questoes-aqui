@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import configService from '../../../../services/configService';
 import Pagination from '../../../../components/common/Pagination/Pagination';
 import { toast } from 'react-toastify';
-import { putDateOnPattern } from '../../../../utils/functions';
-import { hideEmailLinks } from '../../../../utils/emailHtml';
+import { downloadFromLink, putDateOnPattern } from '../../../../utils/functions';
+import { emailFileName, hideEmailLinks } from '../../../../utils/emailHtml';
 import FilterComponent from '../../../../components/admin/FilterComponent/FilterComponent';
 import BaseModal from '../../../../components/common/Modals/BaseModal/BaseModal';
 import ConfirmModal from '../../../../components/common/Modals/ConfirmModal/ConfirmModal';
@@ -71,6 +71,12 @@ const EmailsListPage = () => {
         }
     };
 
+    const downloadEmail = (item) => {
+        const url = URL.createObjectURL(new Blob([item.texto || ''], { type: 'text/html;charset=utf-8' }));
+        downloadFromLink(url, emailFileName(item.assunto, putDateOnPattern(item.dataEnvio)));
+        setTimeout(() => URL.revokeObjectURL(url));
+    };
+
     return (
         <div className="container-fluid py-4">
             <ConfirmModal isOpen={Boolean(itemToResend)} title="Reenviar email" message={`Deseja reenviar o email "${itemToResend?.assunto}" para ${itemToResend?.destinatario}?`} confirmData={itemToResend} onYes={resendEmail} onNo={() => setItemToResend(null)} />
@@ -129,6 +135,9 @@ const EmailsListPage = () => {
                                             <div className="btn-group btn-group-sm">
                                                 <button type="button" className="btn btn-outline-secondary" title="Visualizar" aria-label="Visualizar" onClick={() => setSelected(item)}>
                                                     <i className="bi bi-eye" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" className="btn btn-outline-secondary" title="Baixar" aria-label="Baixar" onClick={() => downloadEmail(item)}>
+                                                    <i className="bi bi-download" aria-hidden="true"></i>
                                                 </button>
                                                 <button type="button" className="btn btn-outline-primary" title="Reenviar" aria-label="Reenviar" onClick={() => setItemToResend(item)}>
                                                     <i className="bi bi-send" aria-hidden="true"></i>

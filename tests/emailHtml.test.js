@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hiddenLinkLabel, hideEmailLinks } from '../src/utils/emailHtml.js';
+import { emailFileName, hiddenLinkLabel, hideEmailLinks } from '../src/utils/emailHtml.js';
 
 test('anchors keep only their text', () => {
     assert.equal(hideEmailLinks('<p><a href="https://www.questoesaqui.com/resetpass/abc" style="color: #fff;">Recuperar senha</a></p>'), '<p>Recuperar senha</p>');
@@ -15,4 +15,10 @@ test('urls written as text are hidden', () => {
 test('empty text returns an empty string', () => {
     assert.equal(hideEmailLinks(null), '');
     assert.equal(hideEmailLinks('Olá, tudo bem?'), 'Olá, tudo bem?');
+});
+
+test('email file name uses subject and date without invalid characters', () => {
+    assert.equal(emailFileName('Recuperar senha', '17/11/2026 às 14:00'), 'Recuperar senha - 17-11-2026 às 14-00.html');
+    assert.equal(emailFileName('Bem-vindo: "Questões" <aqui>?', ''), 'Bem-vindo- -Questões- -aqui--.html');
+    assert.equal(emailFileName(null, null), 'Email.html');
 });
