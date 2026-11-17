@@ -7,7 +7,7 @@ import Pagination from '../../../../components/common/Pagination/Pagination';
 import ConfirmModal from '../../../../components/common/Modals/ConfirmModal/ConfirmModal';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { getTipoPostagemLabel, tiposPostagem } from '../postagemFields';
+import { buildStatusPayload, getTipoPostagemLabel, isPostagemAtiva, tiposPostagem } from '../postagemFields';
 
 const PostagensListPage = () => {
     const navigate = useNavigate();
@@ -50,6 +50,23 @@ const PostagensListPage = () => {
     const handleTipoChange = (event) => {
         setTipoPostagem(Number(event.target.value));
         setPage(1);
+    };
+
+    const toggleStatus = async (item) => {
+        dispatch(setLoading(true));
+        try {
+            const response = await postagemApi.update(buildStatusPayload(item));
+            if (response.success) {
+                toast.success(isPostagemAtiva(item) ? 'Postagem desativada!' : 'Postagem ativada!');
+                setRefresh(prev => prev + 1);
+            } else {
+                toast.error(response.message || 'Erro ao alterar o status.');
+            }
+        } catch {
+            toast.error('Erro ao alterar o status.');
+        } finally {
+            dispatch(setLoading(false));
+        }
     };
 
     const deleteItem = async (item) => {
@@ -105,6 +122,7 @@ const PostagensListPage = () => {
                                     <th scope="col">Título</th>
                                     <th scope="col">Tipo</th>
                                     <th scope="col">Curtidas</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Criada em</th>
                                     <th scope="col" className="table-actions text-end">Ações</th>
                                 </tr>
@@ -117,11 +135,17 @@ const PostagensListPage = () => {
                                         <td data-label="Título">{item.titulo}</td>
                                         <td data-label="Tipo">{getTipoPostagemLabel(item.tipoPostagem)}</td>
                                         <td data-label="Curtidas">{item.curtidas}</td>
+                                        <td data-label="Status">
+                                            <span className={`badge ${isPostagemAtiva(item) ? 'text-bg-success' : 'text-bg-secondary'}`}>{isPostagemAtiva(item) ? 'Ativa' : 'Inativa'}</span>
+                                        </td>
                                         <td data-label="Criada em">{item.created ? new Date(item.created).toLocaleDateString('pt-BR') : ''}</td>
                                         <td className="table-actions text-end">
                                             <div className="btn-group btn-group-sm" role="group" aria-label="Ações do registro">
                                                 <button type="button" className="btn btn-outline-primary" title="Editar" aria-label="Editar" onClick={() => navigate(`${item.id}/editar`)}>
                                                     <i className="bi bi-pencil" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" className={`btn ${isPostagemAtiva(item) ? 'btn-outline-warning' : 'btn-outline-success'}`} title={isPostagemAtiva(item) ? 'Desativar' : 'Ativar'} aria-label={isPostagemAtiva(item) ? 'Desativar' : 'Ativar'} onClick={() => toggleStatus(item)}>
+                                                    <i className={`bi ${isPostagemAtiva(item) ? 'bi-toggle-on' : 'bi-toggle-off'}`} aria-hidden="true"></i>
                                                 </button>
                                                 <button type="button" className="btn btn-outline-danger" title="Excluir" aria-label="Excluir" onClick={() => setItemToDelete(item)}>
                                                     <i className="bi bi-trash" aria-hidden="true"></i>

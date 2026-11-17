@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPostagemPayload, createEmptyPostagem, getTipoPostagemLabel, toPostagemForm } from '../src/pages/admin/Postagens/postagemFields.js';
+import { buildPostagemPayload, buildStatusPayload, createEmptyPostagem, getTipoPostagemLabel, isPostagemAtiva, toPostagemForm } from '../src/pages/admin/Postagens/postagemFields.js';
 
 test('post types follow the API enum', () => {
     assert.equal(getTipoPostagemLabel(0), 'Projetos em destaque');
@@ -29,4 +29,12 @@ test('edited post payload keeps the original data not shown in the form', () => 
     assert.equal(payload.curtidas, 7);
     assert.equal(payload.titulo, 'Novo');
     assert.equal(payload.descricao, '<b>HTML</b>');
+});
+
+test('status toggle flips isActive and keeps the rest of the post', () => {
+    const ativa = { id: 1000, created: '2024-01-01T00:00:00', isActive: '1', curtidas: 3, titulo: 'Post' };
+    assert.equal(isPostagemAtiva(ativa), true);
+    assert.deepEqual(buildStatusPayload(ativa), { ...ativa, isActive: '0' });
+    assert.equal(isPostagemAtiva({ isActive: '0' }), false);
+    assert.equal(buildStatusPayload({ id: 1, isActive: '0' }).isActive, '1');
 });

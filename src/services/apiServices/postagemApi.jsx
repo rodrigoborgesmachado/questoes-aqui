@@ -2,7 +2,7 @@ import api from './serviceApi';
 
 const postagemApi = {
     getPaginated: async (params) => {
-        const response = await api.get('/Postagem/pagged', { params });
+        const response = await api.get('/Postagem/paggedAdmin', { params });
         return response.data;
     },
 

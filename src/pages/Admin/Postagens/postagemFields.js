@@ -23,7 +23,11 @@ export const toPostagemForm = (item = {}) => {
     return Object.keys(emptyForm).reduce((form, field) => ({ ...form, [field]: item[field] ?? emptyForm[field] }), {});
 };
 
-export const buildPostagemPayload = (formData, original = {}) => ({
+export const isPostagemAtiva = (item = {}) => `${item.isActive}` === '1';
+
+export const buildStatusPayload = (item) => ({ ...item, isActive: isPostagemAtiva(item) ? '0' : '1' });
+
+export const buildPostagemPayload =(formData, original = {}) => ({
     ...original,
     ...formData,
     tipoPostagem: Number(formData.tipoPostagem),
