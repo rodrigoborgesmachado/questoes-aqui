@@ -46,6 +46,14 @@ export const menuGroups = [
         ],
     },
     {
+        key: 'portfolio',
+        label: 'Portfolio',
+        icon: 'bi-briefcase',
+        items: [
+            { path: 'portfolio/postagens', label: 'Postagens', icon: 'bi-file-earmark-richtext' },
+        ],
+    },
+    {
         key: 'configuracoes',
         label: 'Configurações',
         icon: 'bi-gear',

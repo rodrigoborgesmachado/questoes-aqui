@@ -27,6 +27,8 @@ import PessoasForDevListPage from '../../pages/Admin/PessoasForDev/PessoasForDev
 import EmpresaForDevListPage from '../../pages/Admin/EmpresaForDev/EmpresaForDevListPage';
 import CartaoCreditoDevToolsListPage from '../../pages/Admin/CartaoCreditoDevTools/CartaoCreditoDevToolsListPage';
 import VeiculosForDevListPage from '../../pages/Admin/VeiculosForDev/VeiculosForDevListPage';
+import PostagensListPage from '../../pages/Admin/Postagens/PostagensListPage/PostagensListPage';
+import PostagemForm from '../../pages/Admin/Postagens/PostagemForm/PostagemForm';
 
 const AdminRoutes = () => (
   <AdminLayout>
@@ -66,6 +68,10 @@ const AdminRoutes = () => (
       <Route path="/data-spark/empresas" element={<EmpresaForDevListPage />} />
       <Route path="/data-spark/cartoes-credito" element={<CartaoCreditoDevToolsListPage />} />
       <Route path="/data-spark/veiculos" element={<VeiculosForDevListPage />} />
+      <Route path="/portfolio" element={<Navigate to="postagens" replace />} />
+      <Route path="/portfolio/postagens" element={<PostagensListPage />} />
+      <Route path="/portfolio/postagens/novo" element={<PostagemForm />} />
+      <Route path="/portfolio/postagens/:id/editar" element={<PostagemForm />} />
       <Route path="/*" element={<Navigate to="/" replace />} />
       </Routes>
   </AdminLayout>

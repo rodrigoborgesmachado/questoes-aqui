@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { findActiveGroupKey, isItemActive, menuGroups } from '../src/components/admin/AdminSidebar/adminMenu.js';
 
-test('menu groups list the four projects and the settings group last', () => {
-    assert.deepEqual(menuGroups.map((group) => group.label), ['Questões Aqui', 'Tabuada Divertida', 'CrudForms', 'Data Spark', 'Configurações']);
+test('menu groups list the five projects and the settings group last', () => {
+    assert.deepEqual(menuGroups.map((group) => group.label), ['Questões Aqui', 'Tabuada Divertida', 'CrudForms', 'Data Spark', 'Portfolio', 'Configurações']);
 });
 
 test('settings group holds logs and sent emails', () => {
@@ -36,6 +36,7 @@ test('active group follows the current path', () => {
     assert.equal(findActiveGroupKey('/tabuada-divertida/resultados-jogos'), 'tabuada-divertida');
     assert.equal(findActiveGroupKey('/crud-forms/instaladores'), 'crud-forms');
     assert.equal(findActiveGroupKey('/data-spark/veiculos'), 'data-spark');
+    assert.equal(findActiveGroupKey('/portfolio/postagens/10/editar'), 'portfolio');
     assert.equal(findActiveGroupKey('/logs'), 'configuracoes');
     assert.equal(findActiveGroupKey('/emails'), 'configuracoes');
     assert.equal(findActiveGroupKey('/inexistente'), undefined);
