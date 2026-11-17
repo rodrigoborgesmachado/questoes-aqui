@@ -10,6 +10,7 @@ function App() {
   const isLoading = useSelector((state) => state.loading.isLoading);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const isUserView = useSelector((state) => state.auth.isUserView);
 
   return (
     <Router>
@@ -18,7 +19,7 @@ function App() {
         {isLoading && <LoadingModal />}
         <Routes>
           {
-            isAuthenticated && isAdmin?
+            isAuthenticated && isAdmin && !isUserView?
             <Route path="/*" element={<AdminRoutes />} />
             :
             <Route path="/*" element={<ClientRoutes />} />

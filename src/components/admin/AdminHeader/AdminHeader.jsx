@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUserName } from '../../../services/redux/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { selectUserName, setUserView } from '../../../services/redux/authSlice';
 import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
 
 const AdminHeader = ({ onclickMenu }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const userName = useSelector(selectUserName);
     const [theme, setTheme] = useState(() => getStoredTheme());
 
@@ -13,6 +16,11 @@ const AdminHeader = ({ onclickMenu }) => {
 
     const switchTheme = (nextTheme) => {
         setTheme(applyTheme(nextTheme));
+    };
+
+    const handleUserView = () => {
+        dispatch(setUserView(true));
+        navigate('/');
     };
 
     return (
@@ -25,6 +33,10 @@ const AdminHeader = ({ onclickMenu }) => {
                     <h1 className="h5 mb-0">Questões Aqui</h1>
                 </div>
                 <div className="d-flex align-items-center gap-2 text-body-secondary">
+                    <button type="button" className="btn btn-outline-secondary d-flex align-items-center gap-2" onClick={handleUserView} title="Ver como usuário">
+                        <i className="bi bi-eye" aria-hidden="true"></i>
+                        <span className="d-none d-md-inline">Ver como usuário</span>
+                    </button>
                     <button
                         type="button"
                         className={`btn btn-outline-secondary rounded-circle theme-toggle-button d-flex align-items-center justify-content-center ${theme === 'dark' ? 'd-none' : ''}`}

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { logout, selectUserName } from '../../../services/redux/authSlice';
+import { logout, selectUserName, setUserView } from '../../../services/redux/authSlice';
 import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
 import BrandLogo from '../../common/BrandLogo/BrandLogo';
 
@@ -49,6 +49,7 @@ const ClientHeader = () => {
     const isSisuActive = location.pathname.startsWith('/sisu/');
     const userName = useSelector(selectUserName);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const isAdmin = useSelector((state) => state.auth.isAdmin);
     const [theme, setTheme] = useState(() => getStoredTheme());
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -86,6 +87,12 @@ const ClientHeader = () => {
 
     const switchTheme = (nextTheme) => {
         setTheme(applyTheme(nextTheme));
+    };
+
+    const handleAdminView = () => {
+        closeMenus();
+        dispatch(setUserView(false));
+        navigate('/');
     };
 
     const handleLogout = () => {
@@ -128,6 +135,14 @@ const ClientHeader = () => {
                                             </li>
                                         ))}
                                         <li><hr className="dropdown-divider" /></li>
+                                        {isAdmin && (
+                                            <li>
+                                                <button type="button" className="dropdown-item" onClick={handleAdminView}>
+                                                    <i className="bi bi-speedometer2 me-2" aria-hidden="true"></i>
+                                                    Voltar para visão admin
+                                                </button>
+                                            </li>
+                                        )}
                                         <li>
                                             <button type="button" className="dropdown-item" onClick={handleLogout}>
                                                 <i className="bi bi-box-arrow-right me-2" aria-hidden="true"></i>

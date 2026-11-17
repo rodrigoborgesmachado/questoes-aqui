@@ -3,5 +3,6 @@ const Config = {
     CODE: "code",
     NAME: "name",
     ADMIN: "admin",
+    USER_VIEW: "userView",
 };
 export default Config;
