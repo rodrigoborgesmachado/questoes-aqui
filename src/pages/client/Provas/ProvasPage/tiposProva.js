@@ -20,6 +20,7 @@ const tiposProva = [
     { descricao: 'História', icone: 'bi-hourglass-split', resumo: 'História do Brasil e geral.' },
     { descricao: 'Direito', icone: 'bi-bank2', resumo: 'Legislação e disciplinas jurídicas.' },
     { descricao: 'Informática', icone: 'bi-laptop', resumo: 'Computação e tecnologia da informação.' },
+    { descricao: '.Net', icone: 'bi-code-slash', resumo: 'Desenvolvimento com C# e a plataforma .NET.' },
 ];
 
 export default tiposProva;
