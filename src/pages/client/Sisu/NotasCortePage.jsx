@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import sisuApi from '../../../services/apiServices/sisuApi';
 import useSisuList from './useSisuList';
 import SisuSelect from './SisuSelect';
-import { formatScore, groupCutoffs } from './sisuUtils';
+import { formatCutoff, groupCutoffs } from './sisuUtils';
 import './Sisu.css';
 
 const NotasCortePage = () => {
@@ -13,7 +13,7 @@ const NotasCortePage = () => {
     const institutions = useSisuList(sisuApi.getInstituicoes);
     const courses = useSisuList(sisuApi.getCursos, institution || null);
     const notes = useSisuList(sisuApi.getNotas, query);
-    const { years, groups } = useMemo(() => groupCutoffs(notes.data), [notes.data]);
+    const { groups } = useMemo(() => groupCutoffs(notes.data), [notes.data]);
 
     const changeInstitution = (value) => {
         setInstitution(value);
@@ -80,21 +80,21 @@ const NotasCortePage = () => {
                     </div>
                     <p className="small text-body-secondary d-md-none px-4 mb-2"><i className="bi bi-arrow-left-right me-2" aria-hidden="true"></i>Deslize a tabela para ver todos os anos.</p>
                     <div className="table-responsive" tabIndex="0" role="region" aria-label={`Notas por ano de ${group.nomeCurso || 'curso consultado'}`}>
-                        <table className="table align-middle sisu-cutoff-table" style={{ '--sisu-year-count': years.length }}>
+                        <table className="table align-middle sisu-cutoff-table" style={{ '--sisu-year-count': group.years.length }}>
                             <caption className="visually-hidden">Notas de corte por modalidade e ano. Um traço indica ausência de registro.</caption>
-                            <colgroup><col className="sisu-mode-column" /><col span={years.length} /></colgroup>
-                            <thead><tr><th scope="col" className="ps-4">Modalidade de concorrência</th>{years.map((year) => <th key={year} scope="col">{year}</th>)}</tr></thead>
+                            <colgroup><col className="sisu-mode-column" /><col span={group.years.length} /></colgroup>
+                            <thead><tr><th scope="col" className="ps-4">Modalidade de concorrência</th>{group.years.map((year) => <th key={year} scope="col">{year}</th>)}</tr></thead>
                             <tbody>
                                 {group.rows.map((row) => (
                                     <tr key={row.key}>
-                                        <th scope="row" className="ps-4"><strong className="d-block">{row.mode || 'Modalidade'}</strong><span className="small text-body-secondary">{row.description || 'Descrição não informada'}</span></th>
-                                        {years.map((year) => <td key={year}>{row.byYear.has(year) ? row.byYear.get(year).map((record, recordIndex) => <span key={record.id ?? recordIndex} className="d-block">{formatScore(record.notaCorte)}</span>) : '—'}</td>)}
+                                        <th scope="row" className="ps-4"><strong className="d-block">{row.label}</strong>{row.descriptions.length > 0 && <details className="small text-body-secondary"><summary>Ver descrição</summary>{row.descriptions.map((description) => <p key={description} className="mt-1 mb-0">{description}</p>)}</details>}</th>
+                                        {group.years.map((year) => <td key={year}>{row.byYear.has(year) ? row.byYear.get(year).map((record, recordIndex) => <span key={record.id ?? recordIndex} className="d-block">{formatCutoff(record)}</span>) : '—'}</td>)}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <p className="small text-body-secondary px-4 py-3 mb-0">“—” indica que não há nota registrada. Valores iguais a zero são exibidos como 0,00. Campus, turnos e edições diferentes aparecem em tabelas separadas.</p>
+                    <p className="small text-body-secondary px-4 py-3 mb-0">“—” indica que não há nota registrada no ano. Modalidades com nomes diferentes entre os anos foram agrupadas; use “Ver descrição” para conferir o texto oficial. Campus, turnos e edições diferentes aparecem em tabelas separadas.</p>
                 </section>
             ))}
         </div>

@@ -20,16 +20,40 @@
 .sisu-cutoff-table {
     margin-bottom: 0;
     table-layout: fixed;
-    min-width: calc(240px + 100px * var(--sisu-year-count));
+    min-width: calc(220px + 84px * var(--sisu-year-count));
 }
 
 .sisu-mode-column {
-    width: 240px;
+    width: 220px;
 }
 
 .sisu-cutoff-table th[scope="row"] {
     white-space: normal;
     font-weight: 400;
+}
+
+.sisu-cutoff-table tr > :first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.sisu-cutoff-table tbody th[scope="row"] {
+    background-color: var(--app-surface-bg);
+}
+
+.sisu-cutoff-table summary {
+    cursor: pointer;
+}
+
+@media (max-width: 575.98px) {
+    .sisu-cutoff-table {
+        min-width: calc(150px + 84px * var(--sisu-year-count));
+    }
+
+    .sisu-mode-column {
+        width: 150px;
+    }
 }
 
 .sisu-cutoff-table thead th {
