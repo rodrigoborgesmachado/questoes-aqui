@@ -1,0 +1,25 @@
+const tiposProva = [
+    { descricao: 'ENEM', icone: 'bi-journal-check', resumo: 'Exame Nacional do Ensino Médio.' },
+    { descricao: 'Vestibular', icone: 'bi-mortarboard', resumo: 'Provas de ingresso em universidades.' },
+    { descricao: 'Concurso Público', icone: 'bi-briefcase', resumo: 'Provas de concursos para cargos públicos.' },
+    { descricao: 'UFU', icone: 'bi-bank', resumo: 'Universidade Federal de Uberlândia.' },
+    { descricao: 'IFTM', icone: 'bi-bank', resumo: 'Instituto Federal do Triângulo Mineiro.' },
+    { descricao: 'ITA', icone: 'bi-airplane', resumo: 'Instituto Tecnológico de Aeronáutica.' },
+    { descricao: 'FGV', icone: 'bi-building', resumo: 'Provas aplicadas pela Fundação Getulio Vargas.' },
+    { descricao: 'Poscomp', icone: 'bi-cpu', resumo: 'Exame para pós-graduação em Computação.' },
+    { descricao: 'Detran', icone: 'bi-car-front', resumo: 'Provas teóricas de trânsito.' },
+    { descricao: 'Ensino Fundamental', icone: 'bi-backpack', resumo: 'Questões do Ensino Fundamental.' },
+    { descricao: 'Ensino Médio', icone: 'bi-book', resumo: 'Questões do Ensino Médio.' },
+    { descricao: 'Ensino Superior', icone: 'bi-mortarboard-fill', resumo: 'Questões de nível superior.' },
+    { descricao: 'Língua Portuguesa', icone: 'bi-chat-quote', resumo: 'Interpretação, gramática e redação.' },
+    { descricao: 'Matemática', icone: 'bi-calculator', resumo: 'Álgebra, geometria e raciocínio lógico.' },
+    { descricao: 'Física', icone: 'bi-lightning-charge', resumo: 'Mecânica, eletricidade, ondas e mais.' },
+    { descricao: 'Biologia', icone: 'bi-tree', resumo: 'Seres vivos, genética e ecologia.' },
+    { descricao: 'Ciências', icone: 'bi-eyedropper', resumo: 'Ciências da natureza.' },
+    { descricao: 'Geografia', icone: 'bi-globe-americas', resumo: 'Espaço, sociedade e meio ambiente.' },
+    { descricao: 'História', icone: 'bi-hourglass-split', resumo: 'História do Brasil e geral.' },
+    { descricao: 'Direito', icone: 'bi-bank2', resumo: 'Legislação e disciplinas jurídicas.' },
+    { descricao: 'Informática', icone: 'bi-laptop', resumo: 'Computação e tecnologia da informação.' },
+];
+
+export default tiposProva;

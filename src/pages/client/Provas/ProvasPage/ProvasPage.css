@@ -1,0 +1,9 @@
+.provas-tipo-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.provas-tipo-card:hover,
+.provas-tipo-card:focus-within {
+    transform: translateY(-2px);
+    box-shadow: var(--bs-box-shadow) !important;
+}

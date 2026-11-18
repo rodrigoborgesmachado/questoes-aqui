@@ -6,6 +6,8 @@ import { setLoading } from '../../../../services/redux/loadingSlice';
 import provaApi from '../../../../services/apiServices/provaApi';
 import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesApi';
 import Pagination from '../../../../components/common/Pagination/Pagination';
+import tiposProva from './tiposProva';
+import './ProvasPage.css';
 
 const QUANTITY = 12;
 
@@ -17,6 +19,7 @@ const ProvasPage = () => {
     const tiposFilter = searchParams.get('tipos') || '';
     const requestedPage = Number(searchParams.get('page'));
     const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+    const showTipos = !bancasFilter && !tiposFilter && !searchParams.get('todas') && !searchParams.get('page');
     const [items, setItems] = useState([]);
     const [totalItens, setTotalItens] = useState(0);
     const [bancas, setBancas] = useState([]);
@@ -24,6 +27,9 @@ const ProvasPage = () => {
     const totalPages = Math.ceil(totalItens / QUANTITY);
 
     useEffect(() => {
+        if (showTipos) {
+            return;
+        }
         const fetchOptions = async () => {
             try {
                 const [bancasResponse, tiposResponse] = await Promise.all([
@@ -37,9 +43,12 @@ const ProvasPage = () => {
             }
         };
         fetchOptions();
-    }, [bancasFilter, tiposFilter]);
+    }, [bancasFilter, tiposFilter, showTipos]);
 
     useEffect(() => {
+        if (showTipos) {
+            return undefined;
+        }
         const lifecycle = new AbortController();
         const fetchItems = async () => {
             dispatch(setLoading(true));
@@ -60,7 +69,7 @@ const ProvasPage = () => {
         };
         fetchItems();
         return () => { lifecycle.abort(); };
-    }, [page, bancasFilter, tiposFilter, isAuthenticated, dispatch]);
+    }, [page, bancasFilter, tiposFilter, isAuthenticated, dispatch, showTipos]);
 
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
@@ -72,6 +81,11 @@ const ProvasPage = () => {
                 next.delete(name);
             }
             next.delete('page');
+            if (next.get('bancas') || next.get('tipos')) {
+                next.delete('todas');
+            } else {
+                next.set('todas', 'true');
+            }
             return next;
         });
     };
@@ -86,8 +100,48 @@ const ProvasPage = () => {
         }
     };
 
+    if (showTipos) {
+        return (
+            <>
+                <div className="mb-4">
+                    <h1 className="h3 mb-1">Provas</h1>
+                    <p className="text-body-secondary mb-0">Escolha um tipo de prova ou veja todas as provas disponíveis.</p>
+                </div>
+                <div className="row g-3">
+                    {tiposProva.map((tipo) => (
+                        <div key={tipo.descricao} className="col-sm-6 col-lg-4 col-xl-3">
+                            <div className="card border-0 shadow-sm h-100 provas-tipo-card">
+                                <div className="card-body d-flex align-items-center gap-3">
+                                    <span className="client-icon-circle"><i className={`bi ${tipo.icone}`} aria-hidden="true"></i></span>
+                                    <div>
+                                        <Link to={`/provas?tipos=${encodeURIComponent(tipo.descricao)}`} className="h6 mb-1 d-block text-reset text-decoration-none stretched-link">{tipo.descricao}</Link>
+                                        <p className="small text-body-secondary mb-0">{tipo.resumo}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="col-sm-6 col-lg-4 col-xl-3">
+                        <div className="card border-0 shadow-sm h-100 provas-tipo-card">
+                            <div className="card-body d-flex align-items-center gap-3">
+                                <span className="client-icon-circle"><i className="bi bi-collection" aria-hidden="true"></i></span>
+                                <div>
+                                    <Link to="/provas?todas=true" className="h6 mb-1 d-block text-reset text-decoration-none stretched-link">Todas as provas</Link>
+                                    <p className="small text-body-secondary mb-0">Veja todas as provas, com filtros por banca e tipo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
     return (
         <>
+            <Link to="/provas" className="link-secondary small d-inline-block mb-3">
+                <i className="bi bi-arrow-left me-1" aria-hidden="true"></i>Tipos de prova
+            </Link>
             <div className="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
                 <div>
                     <h1 className="h3 mb-1">Provas</h1>
