@@ -1,0 +1,74 @@
+.resultado-ring {
+    position: relative;
+    width: 168px;
+    height: 168px;
+}
+
+.resultado-ring svg {
+    transform: rotate(-90deg);
+}
+
+.resultado-ring-track {
+    stroke: color-mix(in srgb, var(--app-white) 25%, var(--app-transparent));
+}
+
+.resultado-ring-value {
+    stroke: var(--app-white);
+    transition: stroke-dashoffset 0.8s ease-out;
+}
+
+.resultado-ring-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultado-comparacao {
+    border: 1px solid color-mix(in srgb, var(--app-white) 30%, var(--app-transparent));
+    border-radius: 2rem;
+    background-color: color-mix(in srgb, var(--app-white) 10%, var(--app-transparent));
+}
+
+.resultado-mapa {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+    gap: 0.5rem;
+}
+
+.resultado-mapa-item {
+    height: 44px;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--app-white);
+}
+
+.resultado-mapa-item.certa {
+    background-color: var(--app-success);
+}
+
+.resultado-mapa-item.errada {
+    background-color: var(--app-danger);
+}
+
+.resultado-mapa-item.pulada {
+    color: var(--app-secondary-color);
+    background-color: var(--app-tertiary-bg);
+}
+
+a.resultado-mapa-item:hover {
+    opacity: 0.85;
+}
+
+.resultado-legenda {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+}
