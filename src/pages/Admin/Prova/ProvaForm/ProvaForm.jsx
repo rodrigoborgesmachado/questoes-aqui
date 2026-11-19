@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import BaseModal from '../../../../components/common/Modals/BaseModal/BaseModal';
+import MateriaisApoioForm from '../../../../components/admin/MateriaisApoioForm/MateriaisApoioForm';
 
 const createEmptyForm = () => ({
     nomeProva: '',
@@ -190,6 +191,7 @@ const ProvaForm = () => {
                     </form>
                 </div>
             </div>
+            {isEditing ? <MateriaisApoioForm codigoProva={Number(id)} /> : <p className="text-body-secondary small mt-3 mb-0">Salve a prova para adicionar materiais de apoio.</p>}
         </div>
     );
 };
