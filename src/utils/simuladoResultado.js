@@ -31,3 +31,28 @@ export const getSimuladoAnterior = (simulados = [], atual) => simulados
     .sort((a, b) => new Date(b.created) - new Date(a.created))[0] || null;
 
 export const getShareText = (percentual, nomeProva) => `Fiz ${percentual}% de aproveitamento no simulado${nomeProva ? ` ${nomeProva}` : ''} no Questões Aqui! 🎯`;
+
+export const getResumoResultado = (itens = [], puladasSemNumero = 0, tempo = 0) => {
+    const respondidas = itens.filter((item) => item.certa != null);
+    const acertos = respondidas.filter((item) => item.certa === '1').length;
+    return {
+        respondidas: respondidas.length,
+        acertos,
+        erros: respondidas.length - acertos,
+        puladas: itens.length - respondidas.length + puladasSemNumero,
+        percentual: getPercentual(respondidas),
+        tempoMedio: respondidas.length > 0 ? tempo / respondidas.length : 0,
+    };
+};
+
+export const registrarVisita = (sessao, questao, ordem) => (sessao[questao.Id] ? sessao : {
+    ...sessao,
+    [questao.Id]: { codigoQuestao: questao.Id, numeroQuestao: questao.numeroQuestao, certa: null, ordem },
+});
+
+export const registrarResposta = (sessao, codigoQuestao, certa) => ({
+    ...sessao,
+    [codigoQuestao]: { ...sessao[codigoQuestao], certa: certa ? '1' : '0' },
+});
+
+export const getItensSessao = (sessao) => Object.values(sessao).sort((a, b) => a.ordem - b.ordem);

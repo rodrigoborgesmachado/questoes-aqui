@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -7,6 +7,8 @@ import questoesApi from '../../../services/apiServices/questoesApi';
 import respostasQuestoesApi from '../../../services/apiServices/respostasQuestoesApi';
 import QuestionView from '../../../components/client/QuestionView/QuestionView';
 import QuestionComments from '../../../components/client/QuestionComments/QuestionComments';
+import ResultadoResumo, { ShareResultadoButton } from '../../../components/client/ResultadoResumo/ResultadoResumo';
+import { getItensSessao, getResumoResultado, registrarResposta, registrarVisita } from '../../../utils/simuladoResultado';
 
 const FILTER_KEYS = ['id', 'codigoProva', 'tipo', 'randon', 'materias', 'bancas', 'tipos', 'provas', 'assuntos'];
 
@@ -22,7 +24,14 @@ const PraticarPage = () => {
     const [total, setTotal] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
     const [answer, setAnswer] = useState(null);
-    const [score, setScore] = useState({ respondidas: 0, acertos: 0 });
+    const [sessao, setSessao] = useState({});
+    const [nomeProva, setNomeProva] = useState('');
+    const [tempo, setTempo] = useState(0);
+    const startedAt = useRef(0);
+
+    useEffect(() => {
+        startedAt.current = Date.now();
+    }, []);
 
     useEffect(() => {
         const fetchQuestao = async () => {
@@ -31,12 +40,16 @@ const PraticarPage = () => {
             try {
                 const response = await questoesApi.getPaginated({ page, quantity: 1, anexos: true, ...filters });
                 if (response.success && response.object?.length > 0) {
-                    setQuestao(response.object[0]);
+                    const item = response.object[0];
+                    setQuestao(item);
                     setTotal(response.total || 0);
                     setIsFinished(false);
+                    setNomeProva(item.prova?.nomeProva || '');
+                    setSessao((previous) => registrarVisita(previous, item, page));
                 } else {
                     setQuestao(null);
                     setIsFinished(true);
+                    setTempo(Math.floor((Date.now() - startedAt.current) / 1000));
                 }
             } catch {
                 toast.error('Erro ao buscar a questão.');
@@ -65,7 +78,7 @@ const PraticarPage = () => {
                 correctCode = correta.object?.codigo ?? null;
             }
             setAnswer({ selectedCode: resposta.codigo, correctCode, certa });
-            setScore((previous) => ({ respondidas: previous.respondidas + 1, acertos: previous.acertos + (certa ? 1 : 0) }));
+            setSessao((previous) => registrarResposta(previous, questao.Id, certa));
         } catch {
             toast.error('Erro ao validar a resposta.');
         } finally {
@@ -75,6 +88,8 @@ const PraticarPage = () => {
 
     const showNavigation = !isSingle;
     const position = isRandom ? null : page;
+    const itensSessao = getItensSessao(sessao);
+    const score = getResumoResultado(itensSessao);
 
     return (
         <div className="mx-auto" style={{ maxWidth: '900px' }}>
@@ -129,14 +144,21 @@ const PraticarPage = () => {
                 </div>
             )}
 
-            {isFinished && (
+            {isFinished && page > 1 && (
+                <ResultadoResumo titulo={filters.codigoProva ? nomeProva : 'Sessão de prática'} subtitulo="Você chegou ao fim!" itens={itensSessao} totalQuestoes={isRandom ? 0 : total} tempo={tempo}>
+                    {filters.codigoProva && <Link to={`/simulados/prova/${filters.codigoProva}`} className="btn btn-primary">Fazer simulado</Link>}
+                    <ShareResultadoButton percentual={score.percentual} nomeProva={filters.codigoProva ? nomeProva : ''} codigoProva={filters.codigoProva} />
+                    <Link to="/provas" className="btn btn-outline-secondary">Ver provas</Link>
+                    <Link to="/desempenho" className={`btn ${filters.codigoProva ? 'btn-outline-secondary' : 'btn-primary'}`}>Meu desempenho</Link>
+                </ResultadoResumo>
+            )}
+
+            {isFinished && page <= 1 && (
                 <div className="card border-0 shadow-sm text-center">
                     <div className="card-body p-5">
                         <i className="bi bi-flag-fill display-5 text-app-primary" aria-hidden="true"></i>
-                        <h1 className="h4 mt-3">{page > 1 ? 'Você chegou ao fim!' : 'Nenhuma questão encontrada'}</h1>
-                        <p className="text-body-secondary">
-                            {page > 1 ? `Nesta sessão você respondeu ${score.respondidas} questões e acertou ${score.acertos}.` : 'Tente outros filtros ou escolha uma prova.'}
-                        </p>
+                        <h1 className="h4 mt-3">Nenhuma questão encontrada</h1>
+                        <p className="text-body-secondary">Tente outros filtros ou escolha uma prova.</p>
                         <div className="d-flex flex-wrap justify-content-center gap-2">
                             <Link to="/provas" className="btn btn-outline-secondary">Ver provas</Link>
                             <Link to="/desempenho" className="btn btn-primary">Meu desempenho</Link>
