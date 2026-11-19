@@ -2,9 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import materialApoioProvaApi from '../../../services/apiServices/materialApoioProvaApi';
 import ConfirmModal from '../../common/Modals/ConfirmModal/ConfirmModal';
-import { MAX_MATERIAL_TITLE, validateMaterial } from '../../client/MateriaisApoio/materialApoioUtils';
+import { MATERIAL_FILE_TYPES, MAX_MATERIAL_TITLE, validateMaterial } from '../../client/MateriaisApoio/materialApoioUtils';
 
-const emptyForm = { codigo: 0, title: '', url: '' };
+const emptyForm = { codigo: 0, title: '', url: '', tipo: 'link', arquivo: null };
+
+const readAsDataUrl = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+});
 
 const MateriaisApoioForm = ({ codigoProva }) => {
     const [materiais, setMateriais] = useState([]);
@@ -12,6 +19,7 @@ const MateriaisApoioForm = ({ codigoProva }) => {
     const [isSaving, setIsSaving] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [refresh, setRefresh] = useState(0);
+    const [fileInputKey, setFileInputKey] = useState(0);
     const isEditing = formData.codigo > 0;
 
     useEffect(() => {
@@ -31,22 +39,43 @@ const MateriaisApoioForm = ({ codigoProva }) => {
         setFormData((previous) => ({ ...previous, [name]: value }));
     };
 
+    const handleTipoChange = (tipo) => {
+        setFormData((previous) => ({ ...previous, tipo, arquivo: null }));
+        setFileInputKey((previous) => previous + 1);
+    };
+
+    const handleFileChange = (event) => {
+        const arquivo = event.target.files?.[0] ?? null;
+        setFormData((previous) => ({ ...previous, arquivo }));
+    };
+
+    const clearForm = () => {
+        setFormData(emptyForm);
+        setFileInputKey((previous) => previous + 1);
+    };
+
     const save = async () => {
-        const error = validateMaterial(formData);
+        const isArquivo = formData.tipo === 'arquivo';
+        if (isArquivo && !formData.arquivo && !isEditing) {
+            toast.warning('Selecione um arquivo.');
+            return;
+        }
+        const error = validateMaterial({ ...formData, arquivo: isArquivo ? formData.arquivo : null });
         if (error) {
             toast.warning(error);
             return;
         }
         setIsSaving(true);
         try {
-            const payload = { ...formData, codigoProva, title: formData.title.trim(), url: formData.url.trim() };
+            const arquivo = isArquivo && formData.arquivo ? await readAsDataUrl(formData.arquivo) : null;
+            const payload = { codigo: formData.codigo, codigoProva, title: formData.title.trim(), url: formData.url.trim(), arquivo };
             const response = isEditing ? await materialApoioProvaApi.update(payload) : await materialApoioProvaApi.create(payload);
             if (!response.success) {
                 toast.warn(response.message || 'Erro ao salvar o material de apoio!');
                 return;
             }
             toast.success(isEditing ? 'Material de apoio atualizado!' : 'Material de apoio adicionado!');
-            setFormData(emptyForm);
+            clearForm();
             setRefresh((previous) => previous + 1);
         } catch {
             toast.error('Erro ao salvar o material de apoio!');
@@ -65,7 +94,7 @@ const MateriaisApoioForm = ({ codigoProva }) => {
             }
             toast.success('Material de apoio removido!');
             if (formData.codigo === material.codigo) {
-                setFormData(emptyForm);
+                clearForm();
             }
             setRefresh((previous) => previous + 1);
         } catch {
@@ -80,22 +109,38 @@ const MateriaisApoioForm = ({ codigoProva }) => {
                 <h2 className="h5 mb-0">Materiais de apoio</h2>
             </div>
             <div className="card-body">
+                <div className="d-flex flex-wrap align-items-center gap-2 mb-3">
+                    <div className="btn-group btn-group-sm" role="group" aria-label="Tipo do material">
+                        <input id="materialTipoLink" type="radio" className="btn-check" name="materialTipo" checked={formData.tipo === 'link'} onChange={() => handleTipoChange('link')} />
+                        <label htmlFor="materialTipoLink" className="btn btn-outline-secondary"><i className="bi bi-link-45deg me-1" aria-hidden="true"></i>Link</label>
+                        <input id="materialTipoArquivo" type="radio" className="btn-check" name="materialTipo" checked={formData.tipo === 'arquivo'} onChange={() => handleTipoChange('arquivo')} />
+                        <label htmlFor="materialTipoArquivo" className="btn btn-outline-secondary"><i className="bi bi-upload me-1" aria-hidden="true"></i>Arquivo</label>
+                    </div>
+                    {formData.tipo === 'arquivo' && <span className="small text-body-secondary">PDF, JPG, PNG ou GIF, até 10 MB</span>}
+                </div>
                 <div className="row g-3 align-items-end">
                     <div className="col-md-4">
                         <label htmlFor="materialTitle" className="form-label">Título</label>
                         <input id="materialTitle" name="title" type="text" className="form-control" value={formData.title} onChange={handleChange} maxLength={MAX_MATERIAL_TITLE} />
                     </div>
-                    <div className="col-md-5">
-                        <label htmlFor="materialUrl" className="form-label">URL</label>
-                        <input id="materialUrl" name="url" type="url" className="form-control" value={formData.url} onChange={handleChange} placeholder="https://" />
-                    </div>
+                    {formData.tipo === 'link' ? (
+                        <div className="col-md-5">
+                            <label htmlFor="materialUrl" className="form-label">URL</label>
+                            <input id="materialUrl" name="url" type="url" className="form-control" value={formData.url} onChange={handleChange} placeholder="https://" />
+                        </div>
+                    ) : (
+                        <div className="col-md-5">
+                            <label htmlFor="materialArquivo" className="form-label">Arquivo</label>
+                            <input key={fileInputKey} id="materialArquivo" type="file" className="form-control" accept={MATERIAL_FILE_TYPES.join(',')} onChange={handleFileChange} />
+                        </div>
+                    )}
                     <div className="col-md-3 d-flex gap-2">
                         <button type="button" className="btn btn-primary" onClick={save} disabled={isSaving}>
                             <i className={`bi ${isEditing ? 'bi-check-lg' : 'bi-plus-lg'} me-1`} aria-hidden="true"></i>
                             {isEditing ? 'Salvar' : 'Adicionar'}
                         </button>
                         {isEditing && (
-                            <button type="button" className="btn btn-outline-secondary" onClick={() => setFormData(emptyForm)}>Cancelar</button>
+                            <button type="button" className="btn btn-outline-secondary" onClick={clearForm}>Cancelar</button>
                         )}
                     </div>
                 </div>
@@ -110,7 +155,7 @@ const MateriaisApoioForm = ({ codigoProva }) => {
                                     <a href={material.url} target="_blank" rel="noopener noreferrer" className="small">{material.url}</a>
                                 </div>
                                 <div className="d-flex gap-2 flex-shrink-0">
-                                    <button type="button" className="btn btn-outline-secondary btn-sm" onClick={() => setFormData({ codigo: material.codigo, title: material.title, url: material.url })} aria-label={`Editar ${material.title}`}>
+                                    <button type="button" className="btn btn-outline-secondary btn-sm" onClick={() => { setFormData({ ...emptyForm, codigo: material.codigo, title: material.title, url: material.url }); setFileInputKey((previous) => previous + 1); }} aria-label={`Editar ${material.title}`}>
                                         <i className="bi bi-pencil" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => setItemToDelete(material)} aria-label={`Remover ${material.title}`}>
