@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AppNativo from './components/client/AppNativo/AppNativo';
 import LoadingModal from './components/common/Modals/LoadingModal/LoadingModal';
 import AdminRoutes from './routes/admin/AdminRoutes';
 import ClientRoutes from './routes/clients/ClientRoutes';
@@ -16,6 +17,7 @@ function App() {
     <Router>
       <div className="App">
         <ToastContainer autoClose={2000} />
+        <AppNativo />
         {isLoading && <LoadingModal />}
         <Routes>
           {

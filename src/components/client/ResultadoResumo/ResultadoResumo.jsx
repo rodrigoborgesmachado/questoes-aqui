@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Share } from '@capacitor/share';
 import StatCard from '../StatCard/StatCard';
 import { copyToMemory } from '../../../utils/functions';
+import { ehApp, urlDoSite } from '../../../services/plataforma';
 import { formatDuration, getMensagem, getResumoResultado, getShareText } from '../../../utils/simuladoResultado';
 import './ResultadoResumo.css';
 
@@ -12,7 +14,11 @@ const RING_LENGTH = 2 * Math.PI * RING_RADIUS;
 export const ShareResultadoButton = ({ percentual, nomeProva, codigoProva }) => {
     const share = async () => {
         const text = getShareText(percentual, nomeProva);
-        const url = codigoProva ? `${window.location.origin}/provas/${codigoProva}` : window.location.origin;
+        const url = codigoProva ? `${urlDoSite()}/provas/${codigoProva}` : urlDoSite();
+        if (ehApp()) {
+            await Share.share({ title: 'Meu resultado no Questões Aqui', text, url }).catch(() => {});
+            return;
+        }
         if (navigator.share) {
             try {
                 await navigator.share({ title: 'Meu resultado no Questões Aqui', text, url });

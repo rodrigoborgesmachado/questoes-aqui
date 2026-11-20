@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { logout, selectUserName, setUserView } from '../../../services/redux/authSlice';
+import { ehApp } from '../../../services/plataforma';
 import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
 import BrandLogo from '../../common/BrandLogo/BrandLogo';
 
@@ -55,6 +56,7 @@ const ClientHeader = () => {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isSisuMenuOpen, setIsSisuMenuOpen] = useState(false);
     const sisuMenuRef = useRef(null);
+    const app = ehApp();
 
     useEffect(() => {
         if (!isSisuMenuOpen) {
@@ -155,11 +157,11 @@ const ClientHeader = () => {
                         ) : (
                             <Link to="/entrar" className="btn btn-primary">Entrar</Link>
                         )}
-                        <button type="button" className="navbar-toggler" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Abrir menu" aria-expanded={isMenuOpen}>
+                        <button type="button" className={`navbar-toggler${app ? ' d-none' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Abrir menu" aria-expanded={isMenuOpen}>
                             <span className="navbar-toggler-icon"></span>
                         </button>
                     </div>
-                    <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
+                    <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}${app ? ' d-none' : ''}`}>
                         <ul className="navbar-nav me-auto ms-lg-4 gap-lg-1" onClick={closeMenus}>
                             {(isAuthenticated ? menuItems : publicMenuItems).map((item) => {
                                 if (item === sisuMenuItem) {

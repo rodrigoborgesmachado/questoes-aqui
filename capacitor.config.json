@@ -1,0 +1,13 @@
+{
+  "appId": "br.com.sunsalesystem.questoesaqui",
+  "appName": "Questões Aqui",
+  "webDir": "dist-app",
+  "backgroundColor": "#f5f6fb",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#f5f6fb",
+      "showSpinner": false
+    }
+  }
+}

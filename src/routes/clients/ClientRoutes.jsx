@@ -27,6 +27,8 @@ import SobrePage from '../../pages/client/Institutional/SobrePage';
 import PrivacidadePage from '../../pages/client/Institutional/PrivacidadePage';
 import TermosPage from '../../pages/client/Institutional/TermosPage';
 import ContatoPage from '../../pages/client/Institutional/ContatoPage';
+import MaisPage from '../../pages/client/Mais/MaisPage';
+import { ehApp } from '../../services/plataforma';
 
 const NotasCortePage = lazy(() => import('../../pages/client/Sisu/NotasCortePage'));
 const CalculadoraEnemPage = lazy(() => import('../../pages/client/Sisu/CalculadoraEnemPage'));
@@ -47,6 +49,7 @@ const ClientRoutes = () => {
                 <Route path="/privacidade" element={<PrivacidadePage />} />
                 <Route path="/termos" element={<TermosPage />} />
                 <Route path="/contato" element={<ContatoPage />} />
+                {ehApp() && <Route path="/mais" element={<MaisPage />} />}
                 <Route path="/sisu/notas-de-corte" element={<Suspense fallback={<p role="status">Carregando notas de corte...</p>}><NotasCortePage /></Suspense>} />
                 <Route path="/sisu/calculadora-enem" element={<Suspense fallback={<p role="status">Carregando calculadora...</p>}><CalculadoraEnemPage /></Suspense>} />
                 <Route path="/notasCorte" element={<Navigate to="/sisu/notas-de-corte" replace />} />

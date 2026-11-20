@@ -6,11 +6,23 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:app": "vite build --mode app",
     "lint": "oxlint",
     "test": "node --test",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "app:sync": "npm run build:app && cap sync android",
+    "app:open": "cap open android",
+    "app:release": "npm run app:sync && cd android && .\\gradlew bundleRelease",
+    "app:assets": "capacitor-assets generate --android --iconBackgroundColor \"#4f46e5\" --iconBackgroundColorDark \"#4f46e5\" --splashBackgroundColor \"#f5f6fb\" --splashBackgroundColorDark \"#1e1e1e\""
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/browser": "^8.0.5",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/share": "^8.0.3",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.4",
     "@reduxjs/toolkit": "^2.14.0",
     "axios": "^1.21.0",
     "bootstrap": "^5.3.8",
@@ -24,6 +36,8 @@
     "react-toastify": "^11.2.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "^4.0.0",
+    "@capacitor/cli": "^8.6.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",

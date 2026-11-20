@@ -2,6 +2,8 @@ import React, { useLayoutEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import ClientHeader from '../../components/client/ClientHeader/ClientHeader';
 import ClientFooter from '../../components/client/ClientFooter/ClientFooter';
+import ClientBottomNav from '../../components/client/ClientBottomNav/ClientBottomNav';
+import { ehApp } from '../../services/plataforma';
 import './ClientLayout.css';
 
 const ClientLayout = () => {
@@ -21,7 +23,7 @@ const ClientLayout = () => {
             <main className="client-main container-xl flex-grow-1 py-4 py-lg-5">
                 <Outlet />
             </main>
-            <ClientFooter />
+            {ehApp() ? <ClientBottomNav /> : <ClientFooter />}
         </div>
     );
 };

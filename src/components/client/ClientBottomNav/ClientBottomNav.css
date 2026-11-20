@@ -1,0 +1,41 @@
+.client-bottom-nav-spacer {
+    flex-shrink: 0;
+    height: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+
+.client-bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -0.5rem 1rem var(--app-shadow-color);
+}
+
+.client-bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 52px;
+    border-radius: 0.75rem;
+    color: var(--bs-secondary-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.client-bottom-nav-item .bi {
+    font-size: 1.25rem;
+}
+
+.client-bottom-nav-item.active {
+    color: var(--app-primary);
+    background-color: var(--app-primary-subtle);
+}
