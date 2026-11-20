@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { countMotivos, getMotivoLabel, getOpenCodes, getStatus, MAX_REPORT_DESCRIPTION, validateReport } from '../src/components/client/ReportQuestion/reportUtils.js';
+import { countMotivos, getMotivoLabel, getOpenCodes, getReportesAbertosResumo, getStatus, MAX_REPORT_DESCRIPTION, validateReport } from '../src/components/client/ReportQuestion/reportUtils.js';
 
 test('report requires a known reason', () => {
     assert.ok(validateReport());
@@ -32,4 +32,10 @@ test('only open reports can be resolved or discarded', () => {
     const reportes = [{ codigo: 1, status: 'aberto' }, { codigo: 2, status: 'resolvido' }, { codigo: 3, status: 'aberto' }, { codigo: 4, status: 'descartado' }];
     assert.deepEqual(getOpenCodes(reportes), [1, 3]);
     assert.deepEqual(getOpenCodes(), []);
+});
+
+test('dashboard summary highlights open reports', () => {
+    assert.deepEqual(getReportesAbertosResumo(0, 0), { destaque: false, titulo: 'Nenhum reporte de erro em aberto', descricao: 'Os erros reportados pelos usuários aparecem aqui.' });
+    assert.deepEqual(getReportesAbertosResumo(1, 1), { destaque: true, titulo: '1 reporte de erro em aberto', descricao: '1 questão aguardando análise.' });
+    assert.deepEqual(getReportesAbertosResumo(5, 3), { destaque: true, titulo: '5 reportes de erro em aberto', descricao: '3 questões aguardando análise.' });
 });

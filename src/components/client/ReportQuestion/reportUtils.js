@@ -31,3 +31,15 @@ export const countMotivos = (reportes = []) => REPORT_MOTIVOS
     .filter((item) => item.quantidade > 0);
 
 export const getOpenCodes = (reportes = []) => reportes.filter((reporte) => reporte.status === 'aberto').map((reporte) => reporte.codigo);
+
+export const getReportesAbertosResumo = (reportes = 0, questoes = 0) => {
+    if (reportes <= 0) {
+        return { destaque: false, titulo: 'Nenhum reporte de erro em aberto', descricao: 'Os erros reportados pelos usuários aparecem aqui.' };
+    }
+
+    return {
+        destaque: true,
+        titulo: `${reportes} ${reportes === 1 ? 'reporte de erro em aberto' : 'reportes de erro em aberto'}`,
+        descricao: `${questoes} ${questoes === 1 ? 'questão aguardando' : 'questões aguardando'} análise.`,
+    };
+};

@@ -8,6 +8,7 @@ import BaseModal from '../../../components/common/Modals/BaseModal/BaseModal';
 import Pagination from '../../../components/common/Pagination/Pagination';
 import { BarList, StackedBarList } from '../../../components/admin/Charts/BarList';
 import { putDateOnPatternOnlyDate } from '../../../utils/functions';
+import { getReportesAbertosResumo } from '../../../components/client/ReportQuestion/reportUtils';
 
 const quantityPerPage = 8;
 const numberFormatter = new Intl.NumberFormat('pt-BR');
@@ -134,6 +135,7 @@ const DashboardPage = () => {
     const respostasUltimos30Dias = Number(dados.quantidadeRespostasUltimas30Dias || 0);
     const quantidadeQuestoesRevisao = Number(dados.quantidadeQuestoesSolicitadasRevisao || 0);
     const quantidadeProvasAbertas = Number(dados.quantidadeProvasDesativasAtivas || 0);
+    const reportesResumo = getReportesAbertosResumo(Number(dados.quantidadeReportesAbertos || 0), Number(dados.quantidadeQuestoesReportadas || 0));
     const tabuadaTotal = Number(dados.quantidadeRespostasTabuadaDivertida || 0);
     const tabuadaUltimos30Dias = Number(dados.quantidadeRespostasTabuadaDivertidaUltimas30Dias || 0);
     const usuariosDates = safeList(dados.usuariosDates).map((item) => ({ label: putDateOnPatternOnlyDate(item.date), value: item.count }));
@@ -200,6 +202,17 @@ const DashboardPage = () => {
                     <strong className="d-block fs-3 text-app-primary">{formatPercent(Number(dados.quantidadeRespostasCertas || 0), totalRespostas)}</strong>
                     <span className="text-body-secondary small">acerto geral</span>
                 </div>
+            </div>
+
+            <div className={`alert ${reportesResumo.destaque ? 'alert-warning' : 'alert-light border'} d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4`} role={reportesResumo.destaque ? 'alert' : 'status'}>
+                <div className="d-flex align-items-center gap-3">
+                    <i className={`bi ${reportesResumo.destaque ? 'bi-exclamation-triangle-fill' : 'bi-flag'} fs-3`} aria-hidden="true"></i>
+                    <div>
+                        <strong className="d-block">{reportesResumo.titulo}</strong>
+                        <span className="small">{reportesResumo.descricao}</span>
+                    </div>
+                </div>
+                <Link to="/reportes-questoes" className={`btn btn-sm ${reportesResumo.destaque ? 'btn-warning' : 'btn-outline-secondary'}`}>Ver reportes</Link>
             </div>
 
             <div className="row g-3 mb-4">
