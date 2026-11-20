@@ -36,6 +36,7 @@ const LoginPage = () => {
                 name: response.nome,
                 code: response.Id ?? response.id,
                 admin: response.admin,
+                foto: response.foto,
             }));
             navigate(`${response.admin}` !== '1' && returnUrl?.startsWith('/') ? returnUrl : '/', { replace: true });
             toast.success('Bem vindo!');

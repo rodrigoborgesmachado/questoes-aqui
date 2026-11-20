@@ -41,6 +41,11 @@ const usuariosApi = {
         return response.data;
     },
 
+    updateFoto: async (foto) => {
+        const response = await api.put('/Usuarios/updateFoto', JSON.stringify(foto));
+        return response.data;
+    },
+
     updateSenha: async (oldPass, newPass) => {
         const response = await api.put('/Usuarios/updateSenha', {}, { params: { oldPass, newPass } });
         return response.data;

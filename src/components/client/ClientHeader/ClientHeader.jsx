@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { logout, selectUserName, setUserView } from '../../../services/redux/authSlice';
+import { logout, selectUserFoto, selectUserName, setUserView } from '../../../services/redux/authSlice';
 import { ehApp } from '../../../services/plataforma';
 import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
 import BrandLogo from '../../common/BrandLogo/BrandLogo';
@@ -49,6 +49,7 @@ const ClientHeader = () => {
     const isProvasActive = (location.pathname === '/provas' || location.pathname.startsWith('/provas/')) && !activeTipo;
     const isSisuActive = location.pathname.startsWith('/sisu/');
     const userName = useSelector(selectUserName);
+    const userFoto = useSelector(selectUserFoto);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const isAdmin = useSelector((state) => state.auth.isAdmin);
     const [theme, setTheme] = useState(() => getStoredTheme());
@@ -122,7 +123,7 @@ const ClientHeader = () => {
                         {isAuthenticated ? (
                             <div className="dropdown">
                                 <button type="button" className="btn btn-outline-secondary d-flex align-items-center gap-2" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} aria-expanded={isUserMenuOpen}>
-                                    <i className="bi bi-person-circle" aria-hidden="true"></i>
+                                    {userFoto ? <img src={userFoto} alt="" className="rounded-circle" width="24" height="24" style={{ objectFit: 'cover' }} /> : <i className="bi bi-person-circle" aria-hidden="true"></i>}
                                     <span className="d-none d-sm-inline text-truncate" style={{ maxWidth: '140px' }}>{userName}</span>
                                     <i className="bi bi-chevron-down small" aria-hidden="true"></i>
                                 </button>

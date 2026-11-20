@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import imageCompression from 'browser-image-compression';
+import compressionLibraryUrl from 'browser-image-compression/dist/browser-image-compression.js?url';
 import { setLoading } from '../../../services/redux/loadingSlice';
-import { setName } from '../../../services/redux/authSlice';
+import { setFoto, setName } from '../../../services/redux/authSlice';
 import usuariosApi from '../../../services/apiServices/usuariosApi';
 import StatCard from '../../../components/client/StatCard/StatCard';
 import { putDateOnPatternOnlyDate } from '../../../utils/functions';
@@ -15,6 +17,7 @@ const PerfilPage = () => {
     const [perfil, setPerfil] = useState(null);
     const [form, setForm] = useState({ nome: '', instituicao: '' });
     const [senhas, setSenhas] = useState(emptyPasswords);
+    const fotoInputRef = useRef(null);
 
     useEffect(() => {
         const fetchPerfil = async () => {
@@ -24,6 +27,7 @@ const PerfilPage = () => {
                 if (response.success) {
                     setPerfil(response.object);
                     setForm({ nome: response.object.usuario?.nome || '', instituicao: response.object.usuario?.instituicao || '' });
+                    dispatch(setFoto(response.object.usuario?.foto));
                 }
             } catch {
                 toast.error('Erro ao buscar o perfil.');
@@ -62,6 +66,41 @@ const PerfilPage = () => {
         }
     };
 
+    const handleFotoChange = async (event) => {
+        const file = event.target.files?.[0];
+        event.target.value = '';
+        if (!file) {
+            return;
+        }
+        if (!file.type.startsWith('image/')) {
+            toast.error('Selecione uma imagem.');
+            return;
+        }
+        dispatch(setLoading(true));
+        try {
+            const compressed = await imageCompression(file, {
+                useWebWorker: true,
+                libURL: new URL(compressionLibraryUrl, window.location.href).href,
+                maxWidthOrHeight: 512,
+                initialQuality: 0.8,
+                fileType: 'image/webp',
+                preserveExif: false,
+            });
+            const response = await usuariosApi.updateFoto(await imageCompression.getDataUrlFromFile(compressed));
+            if (!response.success) {
+                toast.error(response.message || 'Erro ao atualizar a foto.');
+                return;
+            }
+            setPerfil((previous) => ({ ...previous, usuario: { ...previous.usuario, foto: response.object.foto } }));
+            dispatch(setFoto(response.object.foto));
+            toast.success('Foto atualizada!');
+        } catch {
+            toast.error('Erro ao atualizar a foto.');
+        } finally {
+            dispatch(setLoading(false));
+        }
+    };
+
     const handlePasswordSubmit = async (event) => {
         event.preventDefault();
         if (senhas.nova !== senhas.confirmar) {
@@ -94,9 +133,17 @@ const PerfilPage = () => {
     return (
         <>
             <div className="d-flex align-items-center gap-3 mb-4">
-                <span className="client-icon-circle fs-3" style={{ width: '64px', height: '64px' }}>
-                    <i className="bi bi-person" aria-hidden="true"></i>
-                </span>
+                <button type="button" className="client-icon-circle fs-3 border-0 p-0 position-relative" style={{ width: '64px', height: '64px' }} onClick={() => fotoInputRef.current?.click()} aria-label="Alterar foto" title="Alterar foto">
+                    {perfil.usuario?.foto ? (
+                        <img src={perfil.usuario.foto} alt="" className="rounded-circle w-100 h-100" style={{ objectFit: 'cover' }} />
+                    ) : (
+                        <i className="bi bi-person" aria-hidden="true"></i>
+                    )}
+                    <span className="position-absolute bottom-0 end-0 badge rounded-pill bg-primary border border-2 border-body fs-6 p-1 lh-1">
+                        <i className="bi bi-camera" aria-hidden="true"></i>
+                    </span>
+                </button>
+                <input ref={fotoInputRef} type="file" accept="image/*" className="d-none" onChange={handleFotoChange} />
                 <div>
                     <h1 className="h3 mb-0">{perfil.usuario?.nome}</h1>
                     <span className="text-body-secondary">{perfil.usuario?.email}</span>
