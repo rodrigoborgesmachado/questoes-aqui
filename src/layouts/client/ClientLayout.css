@@ -34,6 +34,64 @@
     min-width: 220px;
 }
 
+.client-color-menu.show {
+    top: 100%;
+    right: calc(var(--bs-gutter-x) * 0.5);
+    left: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    width: min(320px, calc(100vw - 1.5rem));
+    margin-top: 0.5rem;
+}
+
+.client-color-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.5rem 0.25rem;
+    border: 2px solid var(--app-transparent);
+    border-radius: var(--app-border-radius);
+    color: var(--app-body-color);
+    background-color: var(--app-transparent);
+}
+
+.client-color-option:hover,
+.client-color-option:focus-visible {
+    background-color: var(--app-tertiary-bg);
+}
+
+.client-color-option.active {
+    border-color: var(--app-primary);
+}
+
+.client-color-option > span:last-child {
+    max-width: 100%;
+}
+
+.client-color-option[data-cor="padrao"] {
+    --app-primary: var(--app-light-primary);
+    --app-tertiary-bg: var(--app-light-tertiary-bg);
+}
+
+[data-bs-theme="dark"] .client-color-option[data-cor="padrao"] {
+    --app-primary: var(--app-dark-primary);
+    --app-tertiary-bg: var(--app-dark-tertiary-bg);
+}
+
+.client-color-swatch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    background-color: var(--app-primary);
+}
+
 .client-hero {
     border-radius: 1rem;
     color: var(--app-white);

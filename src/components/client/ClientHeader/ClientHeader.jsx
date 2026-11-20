@@ -4,7 +4,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { logout, selectUserFoto, selectUserName, setUserView } from '../../../services/redux/authSlice';
 import { ehApp } from '../../../services/plataforma';
-import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
+import { applyColor, applyTheme, getStoredColor, getStoredTheme, themeColors } from '../../../utils/themeMode';
 import BrandLogo from '../../common/BrandLogo/BrandLogo';
 
 const tipoMenuItems = ['IFTM', 'UFU', 'ENEM'].map((tipo) => ({ path: `/provas?tipos=${tipo}`, label: tipo, tipo }));
@@ -56,8 +56,34 @@ const ClientHeader = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isSisuMenuOpen, setIsSisuMenuOpen] = useState(false);
+    const [color, setColor] = useState(() => getStoredColor());
+    const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const sisuMenuRef = useRef(null);
+    const colorMenuRef = useRef(null);
     const app = ehApp();
+
+    useEffect(() => {
+        if (!isColorMenuOpen) {
+            return;
+        }
+        const onPointerDown = (event) => {
+            if (!colorMenuRef.current?.contains(event.target)) {
+                setIsColorMenuOpen(false);
+            }
+        };
+        const onKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                setIsColorMenuOpen(false);
+                colorMenuRef.current?.querySelector('button')?.focus();
+            }
+        };
+        document.addEventListener('pointerdown', onPointerDown);
+        document.addEventListener('keydown', onKeyDown);
+        return () => {
+            document.removeEventListener('pointerdown', onPointerDown);
+            document.removeEventListener('keydown', onKeyDown);
+        };
+    }, [isColorMenuOpen]);
 
     useEffect(() => {
         if (!isSisuMenuOpen) {
@@ -86,10 +112,16 @@ const ClientHeader = () => {
         setIsMenuOpen(false);
         setIsUserMenuOpen(false);
         setIsSisuMenuOpen(false);
+        setIsColorMenuOpen(false);
     };
 
     const switchTheme = (nextTheme) => {
         setTheme(applyTheme(nextTheme));
+    };
+
+    const switchColor = (nextColor) => {
+        setColor(applyColor(nextColor));
+        setIsColorMenuOpen(false);
     };
 
     const handleAdminView = () => {
@@ -108,9 +140,32 @@ const ClientHeader = () => {
     return (
         <header className="client-header bg-body border-bottom shadow-sm">
             <nav className="navbar navbar-expand-lg py-2">
-                <div className="container-xl">
+                <div className="container-xl position-relative">
                     <BrandLogo to="/" className="navbar-brand" onClick={closeMenus} />
                     <div className="d-flex align-items-center gap-2 order-lg-last">
+                        <div ref={colorMenuRef}>
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary rounded-circle theme-toggle-button d-flex align-items-center justify-content-center"
+                                onClick={() => { setIsColorMenuOpen(!isColorMenuOpen); setIsUserMenuOpen(false); }}
+                                aria-label="Escolher tema de cores"
+                                aria-expanded={isColorMenuOpen}
+                                aria-controls="client-color-themes"
+                                title="Tema de cores"
+                            >
+                                <i className="bi bi-palette" aria-hidden="true"></i>
+                            </button>
+                            {isColorMenuOpen && (
+                                <div id="client-color-themes" className="dropdown-menu client-color-menu show shadow position-absolute p-2">
+                                    {themeColors.map((item) => (
+                                        <button key={item.id} type="button" data-cor={item.id} className={`client-color-option${item.id === color ? ' active' : ''}`} onClick={() => switchColor(item.id)} aria-pressed={item.id === color}>
+                                            <span className="client-color-swatch" aria-hidden="true">{item.icone}</span>
+                                            <span className="small text-truncate">{item.nome}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                         <button
                             type="button"
                             className="btn btn-outline-secondary rounded-circle theme-toggle-button d-flex align-items-center justify-content-center"
