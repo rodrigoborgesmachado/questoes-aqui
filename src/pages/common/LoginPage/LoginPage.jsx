@@ -7,6 +7,7 @@ import tokenApi from '../../../services/apiServices/token';
 import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import './LoginPage.css';
 import { setLoading } from '../../../services/redux/loadingSlice';
+import { getLoginErrorMessage } from './loginUtils';
 
 const LoginPage = () => {
     const [identifier, setIdentifier] = useState('');
@@ -38,8 +39,8 @@ const LoginPage = () => {
             }));
             navigate(`${response.admin}` !== '1' && returnUrl?.startsWith('/') ? returnUrl : '/', { replace: true });
             toast.success('Bem vindo!');
-        } catch {
-            setError('Falha na autenticação. Verifique seus dados e tente novamente.');
+        } catch (requestError) {
+            setError(getLoginErrorMessage(requestError));
         } finally {
             dispatch(setLoading(false));
         }

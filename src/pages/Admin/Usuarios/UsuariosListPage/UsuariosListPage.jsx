@@ -10,6 +10,7 @@ import { putDateOnPattern } from '../../../../utils/functions';
 import FilterComponent from '../../../../components/admin/FilterComponent/FilterComponent';
 import BaseModal from '../../../../components/common/Modals/BaseModal/BaseModal';
 import ConfirmModal from '../../../../components/common/Modals/ConfirmModal/ConfirmModal';
+import { activeLabel, canUpdateActive, isActive } from '../../../../components/admin/UsuarioAtivo/usuarioAtivoUtils';
 
 const UsuariosListPage = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const UsuariosListPage = () => {
     const [items, setItems] = useState([]);
     const [selected, setSelected] = useState(null);
     const [itemToUpdateAdmin, setItemToUpdateAdmin] = useState(null);
+    const [itemToUpdateActive, setItemToUpdateActive] = useState(null);
     const [reload, setReload] = useState(0);
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
@@ -85,6 +87,24 @@ const UsuariosListPage = () => {
         }
     };
 
+    const updateActive = async (item) => {
+        setItemToUpdateActive(null);
+        dispatch(setLoading(true));
+        try {
+            const response = await usuariosApi.updateActive(item.Id, !isActive(item));
+            if (response.success) {
+                toast.success(isActive(item) ? 'Usuário desativado!' : 'Usuário ativado!');
+                setReload((value) => value + 1);
+            } else {
+                toast.warn('Não foi possível atualizar o usuário.');
+            }
+        } catch {
+            toast.warn('Não foi possível atualizar o usuário.');
+        } finally {
+            dispatch(setLoading(false));
+        }
+    };
+
     const openUpdateAdmin = (item) => {
         setSelected(null);
         setItemToUpdateAdmin(item);
@@ -114,6 +134,8 @@ const UsuariosListPage = () => {
                         <dd className="col-sm-8">{selected.dataNascimento ?? '-'}</dd>
                         <dt className="col-sm-4 text-body-secondary">Verificado</dt>
                         <dd className="col-sm-8">{isVerified(selected) ? 'Sim' : 'Não'}</dd>
+                        <dt className="col-sm-4 text-body-secondary">Ativo</dt>
+                        <dd className="col-sm-8">{isActive(selected) ? 'Sim' : 'Não'}</dd>
                         <dt className="col-sm-4 text-body-secondary">Perfil</dt>
                         <dd className="col-sm-8">{selected.tipoPerfil?.descricao ?? '-'}</dd>
                         <dt className="col-sm-4 text-body-secondary">Instituição</dt>
@@ -126,6 +148,7 @@ const UsuariosListPage = () => {
                 )}
             </BaseModal>
             <ConfirmModal isOpen={Boolean(itemToUpdateAdmin)} title={itemToUpdateAdmin ? adminLabel(itemToUpdateAdmin) : ''} message={itemToUpdateAdmin ? `Deseja ${isAdmin(itemToUpdateAdmin) ? 'remover o acesso de admin de' : 'tornar admin o usuário'} ${itemToUpdateAdmin.nome}?` : ''} confirmData={itemToUpdateAdmin} onYes={updateAdmin} onNo={() => setItemToUpdateAdmin(null)} />
+            <ConfirmModal isOpen={Boolean(itemToUpdateActive)} title={itemToUpdateActive ? activeLabel(itemToUpdateActive) : ''} message={itemToUpdateActive ? `Deseja ${isActive(itemToUpdateActive) ? 'desativar' : 'ativar'} o usuário ${itemToUpdateActive.nome}?` : ''} confirmData={itemToUpdateActive} onYes={updateActive} onNo={() => setItemToUpdateActive(null)} />
             <div className="mb-4">
                 <h1 className="h3 mb-1">Usuários</h1>
                 <p className="text-body-secondary mb-0">Usuários cadastrados no Questões Aqui.</p>
@@ -144,6 +167,7 @@ const UsuariosListPage = () => {
                                     <th scope="col">Perfil</th>
                                     <th scope="col">Criado</th>
                                     <th scope="col">Verificado</th>
+                                    <th scope="col">Ativo</th>
                                     <th scope="col" className="table-actions text-end">Ações</th>
                                 </tr>
                             </thead>
@@ -160,6 +184,11 @@ const UsuariosListPage = () => {
                                                 {isVerified(item) ? 'Sim' : 'Não'}
                                             </span>
                                         </td>
+                                        <td data-label="Ativo">
+                                            <span className={`badge ${isActive(item) ? 'text-bg-success' : 'text-bg-danger'}`}>
+                                                {isActive(item) ? 'Sim' : 'Não'}
+                                            </span>
+                                        </td>
                                         <td className="table-actions text-end">
                                             <div className="btn-group btn-group-sm" role="group" aria-label="Ações do registro">
                                                 {!isVerified(item) && (
@@ -170,6 +199,11 @@ const UsuariosListPage = () => {
                                                 {canUpdateAdmin(item) && (
                                                     <button type="button" className="btn btn-outline-primary" title={adminLabel(item)} aria-label={adminLabel(item)} onClick={() => openUpdateAdmin(item)}>
                                                         <i className={`bi ${isAdmin(item) ? 'bi-person-dash' : 'bi-person-gear'}`} aria-hidden="true"></i>
+                                                    </button>
+                                                )}
+                                                {canUpdateActive(item, userCode) && (
+                                                    <button type="button" className={`btn ${isActive(item) ? 'btn-outline-danger' : 'btn-outline-success'}`} title={activeLabel(item)} aria-label={activeLabel(item)} onClick={() => setItemToUpdateActive(item)}>
+                                                        <i className={`bi ${isActive(item) ? 'bi-person-slash' : 'bi-person-check'}`} aria-hidden="true"></i>
                                                     </button>
                                                 )}
                                                 <button type="button" className="btn btn-outline-secondary" title="Visualizar" aria-label="Visualizar" onClick={() => setSelected(item)}>

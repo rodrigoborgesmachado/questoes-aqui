@@ -50,6 +50,11 @@ const usuariosApi = {
         const response = await api.put('/Usuarios/updateAdmin', {}, { params: { id, admin } });
         return response.data;
     },
+
+    updateActive: async (id, active) => {
+        const response = await api.put('/Usuarios/updateActive', {}, { params: { id, active } });
+        return response.data;
+    },
 };
 
 export default usuariosApi;
