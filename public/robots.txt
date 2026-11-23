@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+Disallow: /entrar
+Disallow: /criar-conta
+Disallow: /recuperar-senha
+Disallow: /resetpass/
+Disallow: /valida/
+Disallow: /praticar
+Disallow: /simulados
+Disallow: /avaliacoes
+Disallow: /historico
+Disallow: /desempenho
+Disallow: /ranking
+Disallow: /perfil
+Disallow: /admin
+
+Sitemap: https://www.questoesaqui.com/sitemap.xml

@@ -114,6 +114,41 @@ const LandingPage = () => (
             </ol>
         </section>
 
+        <section className="landing-section" aria-labelledby="landing-review-title">
+            <div className="landing-section-heading">
+                <p className="landing-kicker">Revisão com exemplos resolvidos</p>
+                <h2 id="landing-review-title">Entenda o caminho até a resposta.</h2>
+                <p className="text-body-secondary mb-0">Exemplos autorais para treinar raciocínios que você pode aplicar em outras questões. Leia a pergunta, tente resolver e depois confira a explicação.</p>
+            </div>
+            <div className="row g-3">
+                <article className="col-md-4">
+                    <div className="card h-100 p-4">
+                        <h3 className="h5">Porcentagem: cuidado com a base</h3>
+                        <p>Um livro de R$ 80 recebe desconto de 20%. Depois, o preço com desconto aumenta 20%. Ele volta a custar R$ 80?</p>
+                        <p><strong>Resolução:</strong> o desconto é 0,20 × 80 = R$ 16, então o livro passa a custar R$ 64. O aumento incide sobre esse novo valor: 0,20 × 64 = R$ 12,80. O preço final é R$ 76,80.</p>
+                        <p className="text-body-secondary mb-0">Percentuais iguais não se anulam quando as bases mudam. Outra forma de calcular é 80 × 0,80 × 1,20 = 76,80.</p>
+                    </div>
+                </article>
+                <article className="col-md-4">
+                    <div className="card h-100 p-4">
+                        <h3 className="h5">Proporção: identifique a relação</h3>
+                        <p>Três impressoras iguais imprimem um lote em 12 minutos. Quanto tempo seis impressoras levam para imprimir o mesmo lote, mantendo o ritmo?</p>
+                        <p><strong>Resolução:</strong> dobrar o número de impressoras reduz o tempo pela metade. O trabalho total corresponde a 3 × 12 = 36 impressora-minutos. Dividindo por seis, temos 36 ÷ 6 = 6 minutos.</p>
+                        <p className="text-body-secondary mb-0">A relação é inversamente proporcional. Antes de montar uma regra de três, pense se aumentar uma grandeza faz a outra aumentar ou diminuir.</p>
+                    </div>
+                </article>
+                <article className="col-md-4">
+                    <div className="card h-100 p-4">
+                        <h3 className="h5">Leitura: conclusão ou possibilidade?</h3>
+                        <p>Leia: “Alguns estudantes da turma estudam à noite.” É possível concluir que todos os estudantes da turma estudam à noite?</p>
+                        <p><strong>Resolução:</strong> não. A frase informa que há estudantes que estudam à noite, mas não diz se isso vale para a turma inteira. Também não permite concluir que os demais estudam de manhã.</p>
+                        <p className="text-body-secondary mb-0">Separe o que o texto afirma do que apenas seria possível. Termos como “alguns”, “todos” e “nenhum” mudam o alcance de uma afirmação.</p>
+                    </div>
+                </article>
+            </div>
+            <p className="text-body-secondary mt-3 mb-0">Ao revisar um erro, registre o motivo: conteúdo que faltou, cálculo, leitura ou tempo. Refaça a questão sem olhar a solução e procure outra do mesmo assunto em <Link to="/questoes">questões</Link> para verificar se consegue aplicar o raciocínio.</p>
+        </section>
+
         <section className="landing-section" aria-labelledby="landing-goals-title">
             <div className="landing-section-heading">
                 <p className="landing-kicker">Seu objetivo, seu ritmo</p>
