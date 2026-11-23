@@ -169,9 +169,14 @@ const QuestoesListPage = () => {
                                         <td data-label="Assunto">{item.assunto}</td>
                                         {!provaId && <td data-label="Prova">{item.prova?.nomeProva}</td>}
                                         <td className="table-actions text-end">
-                                            <button type="button" className="btn btn-outline-primary btn-sm" title="Editar" aria-label="Editar" onClick={() => navigate(`/questoes/${item.Id}/editar`)}>
-                                                <i className="bi bi-pencil" aria-hidden="true"></i>
-                                            </button>
+                                            <div className="btn-group btn-group-sm">
+                                                <a href={`/questoes/${item.Id}/editar`} target="_blank" rel="noopener noreferrer" className="btn btn-outline-secondary" title="Abrir em nova aba" aria-label="Abrir em nova aba">
+                                                    <i className="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                                                </a>
+                                                <button type="button" className="btn btn-outline-primary" title="Editar" aria-label="Editar" onClick={() => navigate(`/questoes/${item.Id}/editar`)}>
+                                                    <i className="bi bi-pencil" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
