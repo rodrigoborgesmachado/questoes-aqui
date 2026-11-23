@@ -16,6 +16,11 @@ const adminApi = {
         return response.data;
     },
 
+    getRespostasPor: async (agrupamento, params) => {
+        const response = await api.get(`/Admin/getquantidaderespostaspor${agrupamento}`, { params });
+        return response.data;
+    },
+
     getQuestoesParaRevisao: async (params) => {
         const response = await api.get('/Admin/questoespararevisao', { params });
         return response.data;

@@ -5,6 +5,7 @@ export const menuGroups = [
         icon: 'bi-mortarboard',
         items: [
             { path: '', label: 'Dashboard', icon: 'bi-speedometer2' },
+            { path: 'relatorios', label: 'Relatórios', icon: 'bi-bar-chart' },
             { path: 'provas', label: 'Provas', icon: 'bi-book' },
             { path: 'questoes', label: 'Questões', icon: 'bi-folder' },
             { path: 'reportes-questoes', label: 'Reportes de questões', icon: 'bi-flag' },

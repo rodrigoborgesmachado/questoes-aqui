@@ -1,0 +1,56 @@
+.column-chart {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 0.25rem;
+    height: 180px;
+}
+
+.column-chart-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+}
+
+.column-chart-track {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 2rem;
+    border-radius: 0.25rem 0.25rem 0 0;
+    background-color: var(--bs-secondary-bg);
+    overflow: hidden;
+}
+
+.column-chart-bar {
+    width: 100%;
+}
+
+.column-chart-value,
+.column-chart-label {
+    font-size: 0.7rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--bs-secondary-color);
+}
+
+.column-chart-value {
+    min-height: 1rem;
+}
+
+.column-chart-label {
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 575.98px) {
+    .column-chart-value {
+        display: none;
+    }
+
+    .column-chart-item:nth-child(even) .column-chart-label {
+        visibility: hidden;
+    }
+}

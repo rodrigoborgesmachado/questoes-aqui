@@ -133,9 +133,15 @@ const QuestoesForm = () => {
             return;
         }
 
+        const { prova, respostasUsuarios, ...dadosQuestao } = questao;
         const payload = {
-            ...questao,
-            respostasQuestoes: questao.respostasQuestoes.map((resposta) => ({ ...resposta, certa: resposta.certa ? '1' : '2' })),
+            ...dadosQuestao,
+            anexosQuestoes: (questao.anexosQuestoes || []).filter((anexo) => anexo.anexo),
+            respostasQuestoes: questao.respostasQuestoes.map((resposta) => ({
+                ...resposta,
+                certa: resposta.certa ? '1' : '2',
+                anexoResposta: (resposta.anexoResposta || []).filter((anexo) => anexo.anexo),
+            })),
         };
 
         dispatch(setLoading(true));

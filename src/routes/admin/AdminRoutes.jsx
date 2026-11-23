@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AdminLayout from '../../layouts/admin/AdminLayout';
 import DashboardPage from '../../pages/Admin/DashBoard/DashboardPage';
+import RelatoriosPage from '../../components/admin/Relatorios/RelatoriosPage';
 import ProvaListPage from '../../pages/Admin/Prova/ProvaListPage/ProvaListPage';
 import ProvaForm from '../../pages/Admin/Prova/ProvaForm/ProvaForm';
 import QuestoesListPage from '../../pages/Admin/Questoes/QuestoesListPage/QuestoesListPage';
@@ -34,6 +35,7 @@ const AdminRoutes = () => (
   <AdminLayout>
     <Routes>
       <Route path="/" element={<DashboardPage />} />
+      <Route path="/relatorios" element={<RelatoriosPage />} />
       <Route path="/provas" element={<ProvaListPage />} />
       <Route path="/provas/novo" element={<ProvaForm />} />
       <Route path="/provas/:id/editar" element={<ProvaForm />} />
