@@ -1,6 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import ClientLayout from '../../layouts/client/ClientLayout';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from '../../pages/common/LoginPage/LoginPage';
@@ -29,12 +29,19 @@ import TermosPage from '../../pages/client/Institutional/TermosPage';
 import ContatoPage from '../../pages/client/Institutional/ContatoPage';
 import MaisPage from '../../pages/client/Mais/MaisPage';
 import { ehApp } from '../../services/plataforma';
+import { registrarPagina } from '../../services/analytics';
 
 const NotasCortePage = lazy(() => import('../../pages/client/Sisu/NotasCortePage'));
 const CalculadoraEnemPage = lazy(() => import('../../pages/client/Sisu/CalculadoraEnemPage'));
 
 const ClientRoutes = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const { pathname, search } = useLocation();
+
+    useEffect(() => {
+        const timer = setTimeout(() => registrarPagina(`${pathname}${search}`), 800);
+        return () => clearTimeout(timer);
+    }, [pathname, search]);
 
     return (
         <Routes>

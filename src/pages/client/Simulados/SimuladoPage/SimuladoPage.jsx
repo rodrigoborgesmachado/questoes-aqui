@@ -8,6 +8,7 @@ import respostasQuestoesApi from '../../../../services/apiServices/respostasQues
 import simuladoApi from '../../../../services/apiServices/simuladoApi';
 import QuestionView from '../../../../components/client/QuestionView/QuestionView';
 import ConfirmModal from '../../../../components/common/Modals/ConfirmModal/ConfirmModal';
+import { registrarEvento } from '../../../../services/analytics';
 
 const formatTime = (seconds) => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
 
@@ -51,6 +52,7 @@ const SimuladoPage = () => {
                 return;
             }
             simuladoApi.sendReportEmail(response.object.codigo).catch(() => {});
+            registrarEvento('finalizar_simulado', { prova: questao?.prova?.nomeProva || provaId, percentual_acerto: Math.round((lista.filter((item) => item.certa === '1').length / lista.length) * 100) });
             toast.success('Simulado finalizado!');
             navigate(`/simulados/resultado/${response.object.codigo}`, { replace: true });
         } catch {
@@ -72,6 +74,9 @@ const SimuladoPage = () => {
                 if (response.success && response.object?.length > 0) {
                     setQuestao(response.object[0]);
                     setTotal(response.total || 0);
+                    if (page === 1) {
+                        registrarEvento('iniciar_simulado', { prova: response.object[0].prova?.nomeProva || provaId });
+                    }
                 } else if (page === 1) {
                     toast.warn('Esta prova não possui questões.');
                     navigate('/provas', { replace: true });

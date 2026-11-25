@@ -8,6 +8,7 @@ import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import './LoginPage.css';
 import { setLoading } from '../../../services/redux/loadingSlice';
 import { getLoginErrorMessage } from './loginUtils';
+import { registrarEvento } from '../../../services/analytics';
 
 const LoginPage = () => {
     const [identifier, setIdentifier] = useState('');
@@ -38,6 +39,7 @@ const LoginPage = () => {
                 admin: response.admin,
                 foto: response.foto,
             }));
+            registrarEvento('login', { method: 'email' });
             navigate(`${response.admin}` !== '1' && returnUrl?.startsWith('/') ? returnUrl : '/', { replace: true });
             toast.success('Bem vindo!');
         } catch (requestError) {

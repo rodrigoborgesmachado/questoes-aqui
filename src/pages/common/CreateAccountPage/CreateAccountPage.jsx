@@ -6,6 +6,7 @@ import { setLoading } from '../../../services/redux/loadingSlice';
 import usuariosApi from '../../../services/apiServices/usuariosApi';
 import MessageModal from '../../../components/common/Modals/MessageModal/MessageModal';
 import { stringToHash } from '../../../utils/passwordHash';
+import { registrarEvento } from '../../../services/analytics';
 import BrandLogo from '../../../components/common/BrandLogo/BrandLogo';
 import '../LoginPage/LoginPage.css';
 
@@ -39,6 +40,7 @@ const CreateAccountPage = () => {
                 instituicao: form.instituicao,
             }, PERFIL_ALUNO);
             if (response.success) {
+                registrarEvento('sign_up', { method: 'email' });
                 setIsMessageOpen(true);
             } else {
                 toast.warn('Já existe um usuário com esse email!');

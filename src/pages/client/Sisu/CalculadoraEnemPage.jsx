@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Seo from '../../../components/common/Seo/Seo';
+import { registrarEvento } from '../../../services/analytics';
 import sisuApi from '../../../services/apiServices/sisuApi';
 import useSisuList from './useSisuList';
 import SisuSelect from './SisuSelect';
@@ -38,6 +39,7 @@ const CalculadoraEnemPage = () => {
         try {
             setResult(calculateWeightedAverage(rows));
             setError('');
+            registrarEvento('calcular_media_enem');
         } catch (calculationError) {
             setResult(null);
             setError(calculationError.message);

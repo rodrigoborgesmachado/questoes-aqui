@@ -105,6 +105,17 @@ function PrivacidadePage() {
                     funcionalidades podem ser impactadas.
                 </p>
 
+                <h2 className='institutional-section-title'>Google Analytics</h2>
+                <p className='institutional-paragraph'>
+                    O Questões Aqui utiliza o Google Analytics para entender como a plataforma é usada, como páginas
+                    visitadas, questões respondidas e simulados realizados. Não enviamos nome, e-mail ou outros dados
+                    que identifiquem o usuário. O Google pode coletar informações técnicas, como endereço IP,
+                    identificadores de cookies e dados do navegador. Para não ser medido, você pode instalar o{' '}
+                    <a href='https://tools.google.com/dlpage/gaoptout' target='_blank' rel='noopener noreferrer'>
+                        complemento de desativação do Google Analytics
+                    </a>.
+                </p>
+
                 <h2 className='institutional-section-title'>Publicidade e Google AdSense</h2>
                 <p className='institutional-paragraph'>
                     O Questões Aqui utiliza o Google AdSense para veicular anúncios. O Google e outros fornecedores

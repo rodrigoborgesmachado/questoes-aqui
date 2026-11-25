@@ -9,6 +9,7 @@ import QuestionView from '../../../components/client/QuestionView/QuestionView';
 import QuestionComments from '../../../components/client/QuestionComments/QuestionComments';
 import ResultadoResumo, { ShareResultadoButton } from '../../../components/client/ResultadoResumo/ResultadoResumo';
 import { getItensSessao, getResumoResultado, registrarResposta, registrarVisita } from '../../../utils/simuladoResultado';
+import { registrarEvento } from '../../../services/analytics';
 
 const FILTER_KEYS = ['id', 'codigoProva', 'tipo', 'randon', 'materias', 'bancas', 'tipos', 'provas', 'assuntos'];
 
@@ -79,6 +80,7 @@ const PraticarPage = () => {
             }
             setAnswer({ selectedCode: resposta.codigo, correctCode, certa });
             setSessao((previous) => registrarResposta(previous, questao.Id, certa));
+            registrarEvento('responder_questao', { acertou: certa, materia: questao.materia || '', tipo_prova: questao.prova?.tipoProva || '' });
         } catch {
             toast.error('Erro ao validar a resposta.');
         } finally {

@@ -7,8 +7,10 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './services/redux/store';
 import { applyTheme, getStoredTheme } from './utils/themeMode';
+import { iniciarAnalytics } from './services/analytics';
 
 applyTheme(getStoredTheme());
+iniciarAnalytics();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
