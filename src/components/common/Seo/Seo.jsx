@@ -6,7 +6,7 @@ const SITE_NAME = 'Questões Aqui';
 
 const getDescriptionTag = () => document.querySelector('meta[name="description"]');
 
-const Seo = ({ title, description }) => {
+const Seo = ({ title, description, canonicalPath }) => {
     const { pathname } = useLocation();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const Seo = ({ title, description }) => {
             descriptionTag.setAttribute('content', description);
         }
         canonical.rel = 'canonical';
-        canonical.href = `${SITE_URL}${pathname === '/' ? '/' : pathname.replace(/\/+$/, '')}`;
+        canonical.href = `${SITE_URL}${canonicalPath || (pathname === '/' ? '/' : pathname.replace(/\/+$/, ''))}`;
         document.head.appendChild(canonical);
 
         return () => {
@@ -28,7 +28,7 @@ const Seo = ({ title, description }) => {
             descriptionTag?.setAttribute('content', defaultDescription);
             canonical.remove();
         };
-    }, [title, description, pathname]);
+    }, [title, description, canonicalPath, pathname]);
 
     return null;
 };

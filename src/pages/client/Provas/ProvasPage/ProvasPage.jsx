@@ -8,6 +8,7 @@ import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesAp
 import Pagination from '../../../../components/common/Pagination/Pagination';
 import Seo from '../../../../components/common/Seo/Seo';
 import MateriaisApoio from '../../../../components/client/MateriaisApoio/MateriaisApoio';
+import { provaPath } from '../../../../utils/slug';
 import tiposProva from './tiposProva';
 import './ProvasPage.css';
 
@@ -198,7 +199,7 @@ const ProvasPage = () => {
                                         </div>
                                     )}
                                     <div className="d-flex flex-wrap gap-2 mt-auto">
-                                        <Link to={`/provas/${item.Id}`} className="btn btn-outline-secondary btn-sm">Ver questões</Link>
+                                        <Link to={provaPath(item)} className="btn btn-outline-secondary btn-sm">Ver questões</Link>
                                         <Link to={`/praticar?codigoProva=${item.Id}`} className="btn btn-outline-primary btn-sm">Resolver</Link>
                                         <Link to={`/simulados/prova/${item.Id}`} className="btn btn-primary btn-sm">Simulado</Link>
                                         <MateriaisApoio prova={item} />

@@ -7,6 +7,7 @@ import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesAp
 import QuestionView from '../../../../components/client/QuestionView/QuestionView';
 import QuestionComments from '../../../../components/client/QuestionComments/QuestionComments';
 import Seo from '../../../../components/common/Seo/Seo';
+import { questaoPath } from '../../../../utils/slug';
 
 const QuestaoPublicaPage = () => {
     const { id } = useParams();
@@ -36,7 +37,7 @@ const QuestaoPublicaPage = () => {
 
     return (
         <div className="mx-auto" style={{ maxWidth: '900px' }}>
-            <Seo title={seoTitle} description={seoDescription} />
+            <Seo title={seoTitle} description={seoDescription} canonicalPath={questao && questaoPath(questao)} />
             <button type="button" className="btn btn-link link-secondary small px-0 mb-3" onClick={() => navigate(-1)}>
                 <i className="bi bi-arrow-left me-1" aria-hidden="true"></i>Voltar
             </button>

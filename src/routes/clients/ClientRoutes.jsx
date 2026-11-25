@@ -63,8 +63,10 @@ const ClientRoutes = () => {
                 <Route path="/calculadoraEnem" element={<Navigate to="/sisu/calculadora-enem" replace />} />
                 <Route path="/provas" element={<ProvasPage />} />
                 <Route path="/provas/:provaId" element={<ProvaQuestoesPage />} />
+                <Route path="/provas/:provaId/:slug" element={<ProvaQuestoesPage />} />
                 <Route path="/questoes" element={<QuestoesPage />} />
                 <Route path="/questoes/:id" element={<QuestaoPublicaPage />} />
+                <Route path="/questoes/:id/:slug" element={<QuestaoPublicaPage />} />
                 <Route element={<PrivateRoute />}>
                     <Route path="/praticar" element={<PraticarPage />} />
                     <Route path="/simulados" element={<SimuladosPage />} />

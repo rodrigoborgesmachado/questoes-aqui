@@ -7,6 +7,7 @@ import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesAp
 import Pagination from '../../../../components/common/Pagination/Pagination';
 import Seo from '../../../../components/common/Seo/Seo';
 import QuestionListItem from '../../../../components/client/QuestionListItem/QuestionListItem';
+import { provaPath } from '../../../../utils/slug';
 
 const QUANTITY = 10;
 
@@ -55,7 +56,7 @@ const ProvaQuestoesPage = () => {
 
     return (
         <>
-            <Seo title={prova?.nomeProva || 'Prova'} description={`Questões da prova ${[prova?.nomeProva, prova?.banca, prova?.dataAplicacao].filter(Boolean).join(' · ') || 'selecionada'}. Resolva em sequência ou faça o simulado no Questões Aqui.`} />
+            <Seo title={prova?.nomeProva || 'Prova'} description={`Questões da prova ${[prova?.nomeProva, prova?.banca, prova?.dataAplicacao].filter(Boolean).join(' · ') || 'selecionada'}. Resolva em sequência ou faça o simulado no Questões Aqui.`} canonicalPath={prova && provaPath(prova)} />
             <Link to="/provas" className="link-secondary small d-inline-block mb-3">
                 <i className="bi bi-arrow-left me-1" aria-hidden="true"></i>Provas
             </Link>
