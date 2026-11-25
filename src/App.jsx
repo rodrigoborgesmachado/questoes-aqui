@@ -14,11 +14,10 @@ function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const isUserView = useSelector((state) => state.auth.isUserView);
-  const isAdminView = isAuthenticated && isAdmin && !isUserView;
 
   useLayoutEffect(() => {
-    showColor(isAdminView ? 'padrao' : getStoredColor());
-  }, [isAdminView]);
+    showColor(getStoredColor());
+  }, []);
 
   return (
     <Router>

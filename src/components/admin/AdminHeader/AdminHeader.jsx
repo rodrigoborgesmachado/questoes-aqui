@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectUserName, setUserView } from '../../../services/redux/authSlice';
+import { selectUserFoto, selectUserName, setUserView } from '../../../services/redux/authSlice';
 import { applyTheme, getStoredTheme } from '../../../utils/themeMode';
 
 const AdminHeader = ({ onclickMenu }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userName = useSelector(selectUserName);
+    const userFoto = useSelector(selectUserFoto);
     const [theme, setTheme] = useState(() => getStoredTheme());
 
     useEffect(() => {
@@ -56,7 +57,7 @@ const AdminHeader = ({ onclickMenu }) => {
                         <i className="bi bi-sun" aria-hidden="true"></i>
                     </button>
                     <span className="d-none d-sm-inline">Olá, {userName}</span>
-                    <i className="bi bi-person-circle fs-4" aria-hidden="true"></i>
+                    {userFoto ? <img src={userFoto} alt="" className="rounded-circle" width="28" height="28" style={{ objectFit: 'cover' }} /> : <i className="bi bi-person-circle fs-4" aria-hidden="true"></i>}
                 </div>
             </div>
         </header>
