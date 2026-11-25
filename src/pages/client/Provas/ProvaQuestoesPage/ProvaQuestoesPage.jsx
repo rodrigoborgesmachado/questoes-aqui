@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { setLoading } from '../../../../services/redux/loadingSlice';
 import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesApi';
 import Pagination from '../../../../components/common/Pagination/Pagination';
+import Seo from '../../../../components/common/Seo/Seo';
 import QuestionListItem from '../../../../components/client/QuestionListItem/QuestionListItem';
 
 const QUANTITY = 10;
@@ -54,6 +55,7 @@ const ProvaQuestoesPage = () => {
 
     return (
         <>
+            <Seo title={prova?.nomeProva || 'Prova'} description={`Questões da prova ${[prova?.nomeProva, prova?.banca, prova?.dataAplicacao].filter(Boolean).join(' · ') || 'selecionada'}. Resolva em sequência ou faça o simulado no Questões Aqui.`} />
             <Link to="/provas" className="link-secondary small d-inline-block mb-3">
                 <i className="bi bi-arrow-left me-1" aria-hidden="true"></i>Provas
             </Link>

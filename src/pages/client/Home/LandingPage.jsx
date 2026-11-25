@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import './LandingPage.css';
 
 const studySteps = [
@@ -76,6 +77,7 @@ const DemoQuestion = () => {
 
 const LandingPage = () => (
     <div className="landing-page">
+        <Seo description="Estude com questões de provas reais do ENEM, vestibulares e concursos. Explore o acervo, pratique no seu ritmo e faça simulados no Questões Aqui." />
         <section className="landing-hero" aria-labelledby="landing-title">
             <div className="landing-hero-copy">
                 <p className="landing-kicker"><i className="bi bi-mortarboard me-2" aria-hidden="true"></i>ENEM, vestibulares e processos seletivos</p>

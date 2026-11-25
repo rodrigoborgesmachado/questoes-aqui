@@ -1,4 +1,11 @@
 {
+  "routes": [
+    { "route": "/listagemprovas*", "redirect": "/provas", "statusCode": 301 },
+    { "route": "/listagemquestoes*", "redirect": "/questoes", "statusCode": 301 },
+    { "route": "/questaopublica*", "redirect": "/questoes", "statusCode": 301 },
+    { "route": "/notasCorte", "redirect": "/sisu/notas-de-corte", "statusCode": 301 },
+    { "route": "/calculadoraEnem", "redirect": "/sisu/calculadora-enem", "statusCode": 301 }
+  ],
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": ["/assets/*", "/*.{css,js,map,png,jpg,jpeg,gif,svg,ico,webp,woff,woff2,txt,xml}"]

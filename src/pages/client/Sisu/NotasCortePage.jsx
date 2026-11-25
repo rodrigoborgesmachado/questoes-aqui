@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import sisuApi from '../../../services/apiServices/sisuApi';
 import useSisuList from './useSisuList';
 import SisuSelect from './SisuSelect';
@@ -35,6 +36,7 @@ const NotasCortePage = () => {
 
     return (
         <div className="sisu-page">
+            <Seo title="Notas de corte do Sisu" description="Consulte o histórico de notas de corte do Sisu por instituição, curso e modalidade de concorrência, sem precisar entrar na conta." />
             <header className="d-flex flex-wrap align-items-end justify-content-between gap-3">
                 <div className="sisu-page-heading">
                     <p className="small text-app-primary fw-semibold mb-2"><i className="bi bi-mortarboard me-2" aria-hidden="true"></i>Sisu · Planeje sua preparação</p>

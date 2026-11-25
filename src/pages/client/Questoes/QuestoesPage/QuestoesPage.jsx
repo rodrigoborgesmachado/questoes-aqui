@@ -6,6 +6,7 @@ import { setLoading } from '../../../../services/redux/loadingSlice';
 import provaApi from '../../../../services/apiServices/provaApi';
 import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesApi';
 import Pagination from '../../../../components/common/Pagination/Pagination';
+import Seo from '../../../../components/common/Seo/Seo';
 import QuestionListItem from '../../../../components/client/QuestionListItem/QuestionListItem';
 
 const QUANTITY = 10;
@@ -70,6 +71,7 @@ const QuestoesPage = () => {
 
     return (
         <>
+            <Seo title="Banco de questões" description="Banco de questões de provas do ENEM, vestibulares e concursos. Filtre por matéria, banca ou tipo de prova e pratique online." />
             <div className="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
                 <div>
                     <h1 className="h3 mb-1">Banco de questões</h1>

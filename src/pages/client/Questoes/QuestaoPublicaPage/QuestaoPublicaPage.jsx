@@ -6,6 +6,7 @@ import { setLoading } from '../../../../services/redux/loadingSlice';
 import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesApi';
 import QuestionView from '../../../../components/client/QuestionView/QuestionView';
 import QuestionComments from '../../../../components/client/QuestionComments/QuestionComments';
+import Seo from '../../../../components/common/Seo/Seo';
 
 const QuestaoPublicaPage = () => {
     const { id } = useParams();
@@ -15,6 +16,8 @@ const QuestaoPublicaPage = () => {
     const [questao, setQuestao] = useState(null);
     const [showComments, setShowComments] = useState(false);
     const answerUrl = `/praticar?id=${id}`;
+    const seoTitle = [questao?.numeroQuestao > 0 && `Questão ${questao.numeroQuestao}`, questao?.prova?.nomeProva].filter(Boolean).join(' - ') || 'Questão';
+    const seoDescription = `Resolva a ${seoTitle}${questao?.materia ? ` de ${questao.materia}` : ''}${questao?.assunto ? ` (${questao.assunto})` : ''} e confira o gabarito no Questões Aqui.`;
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -33,6 +36,7 @@ const QuestaoPublicaPage = () => {
 
     return (
         <div className="mx-auto" style={{ maxWidth: '900px' }}>
+            <Seo title={seoTitle} description={seoDescription} />
             <button type="button" className="btn btn-link link-secondary small px-0 mb-3" onClick={() => navigate(-1)}>
                 <i className="bi bi-arrow-left me-1" aria-hidden="true"></i>Voltar
             </button>

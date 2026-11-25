@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import './InstitutionalPage.css';
 
 const contacts = [
@@ -12,6 +13,7 @@ const contacts = [
 
 const ContatoPage = () => (
     <article className="institutional-page">
+        <Seo title="Contato" description="Fale com a equipe do Questões Aqui para tirar dúvidas, enviar sugestões ou relatar problemas." />
         <div className="card border-0 shadow-sm institutional-card">
             <h1 className="institutional-title">Contato</h1>
             <p className="institutional-paragraph">Tem uma dúvida, uma sugestão ou encontrou algum problema? Entre em contato com a SunSale System pelos canais abaixo.</p>

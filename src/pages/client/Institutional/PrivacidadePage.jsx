@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import './InstitutionalPage.css';
 
 function PrivacidadePage() {
     return (
         <article className='institutional-page'>
+            <Seo title='Política de Privacidade' description='Saiba como o Questões Aqui coleta, usa e protege seus dados pessoais, incluindo cookies e anúncios.' />
             <div className='card border-0 shadow-sm institutional-card'>
                 <h1 className='institutional-title'>Política de Privacidade</h1>
 

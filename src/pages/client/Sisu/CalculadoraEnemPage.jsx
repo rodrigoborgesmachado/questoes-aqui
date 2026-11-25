@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import sisuApi from '../../../services/apiServices/sisuApi';
 import useSisuList from './useSisuList';
 import SisuSelect from './SisuSelect';
@@ -45,6 +46,7 @@ const CalculadoraEnemPage = () => {
 
     return (
         <div className="sisu-page">
+            <Seo title="Calculadora de média do ENEM" description="Simule sua média ponderada do ENEM informando as notas e os pesos de cada área do curso que você quer no Sisu." />
             <header className="d-flex flex-wrap align-items-end justify-content-between gap-3">
                 <div className="sisu-page-heading">
                     <p className="small text-app-primary fw-semibold mb-2"><i className="bi bi-calculator me-2" aria-hidden="true"></i>Sisu · Planeje sua preparação</p>

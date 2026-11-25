@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import './InstitutionalPage.css';
 
 function TermosPage() {
     return (
         <article className='institutional-page'>
+            <Seo title='Termos de Uso' description='Leia os termos e condições de uso da plataforma Questões Aqui.' />
             <div className='card border-0 shadow-sm institutional-card'>
                 <h1 className='institutional-title'>Termos de Uso</h1>
 

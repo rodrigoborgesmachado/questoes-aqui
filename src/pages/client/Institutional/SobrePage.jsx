@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import Seo from '../../../components/common/Seo/Seo';
 import './InstitutionalPage.css';
 
 function SobrePage() {
     return (
         <article className='institutional-page'>
+            <Seo title='Sobre' description='Conheça o Questões Aqui, plataforma de estudos focada na resolução de questões de provas reais, com histórico de respostas e acompanhamento de desempenho.' />
             <div className='card border-0 shadow-sm institutional-card'>
                 <h1 className='institutional-title'>Sobre o Questões Aqui</h1>
 

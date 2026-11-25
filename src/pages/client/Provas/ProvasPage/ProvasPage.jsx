@@ -6,9 +6,12 @@ import { setLoading } from '../../../../services/redux/loadingSlice';
 import provaApi from '../../../../services/apiServices/provaApi';
 import publicQuestoesApi from '../../../../services/apiServices/publicQuestoesApi';
 import Pagination from '../../../../components/common/Pagination/Pagination';
+import Seo from '../../../../components/common/Seo/Seo';
 import MateriaisApoio from '../../../../components/client/MateriaisApoio/MateriaisApoio';
 import tiposProva from './tiposProva';
 import './ProvasPage.css';
+
+const seoDescription = 'Provas anteriores do ENEM, vestibulares e concursos organizadas por tipo e banca. Veja as questões, resolva em sequência ou faça um simulado.';
 
 const QUANTITY = 12;
 
@@ -104,6 +107,7 @@ const ProvasPage = () => {
     if (showTipos) {
         return (
             <>
+                <Seo title="Provas anteriores" description={seoDescription} />
                 <div className="mb-4">
                     <h1 className="h3 mb-1">Provas</h1>
                     <p className="text-body-secondary mb-0">Escolha um tipo de prova ou veja todas as provas disponíveis.</p>
@@ -140,6 +144,7 @@ const ProvasPage = () => {
 
     return (
         <>
+            <Seo title="Provas anteriores" description={seoDescription} />
             <Link to="/provas" className="link-secondary small d-inline-block mb-3">
                 <i className="bi bi-arrow-left me-1" aria-hidden="true"></i>Tipos de prova
             </Link>
