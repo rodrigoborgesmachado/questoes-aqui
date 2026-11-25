@@ -21,6 +21,7 @@ const tiposProva = [
     { descricao: 'Direito', icone: 'bi-bank2', resumo: 'Legislação e disciplinas jurídicas.' },
     { descricao: 'Informática', icone: 'bi-laptop', resumo: 'Computação e tecnologia da informação.' },
     { descricao: '.Net', icone: 'bi-code-slash', resumo: 'Desenvolvimento com C# e a plataforma .NET.' },
+    { descricao: 'React', icone: 'bi-filetype-jsx', resumo: 'Desenvolvimento front-end com React e seu ecossistema.' },
 ];
 
 export default tiposProva;
