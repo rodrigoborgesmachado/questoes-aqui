@@ -31,7 +31,10 @@
 .admin-sidebar .nav {
     flex-wrap: nowrap;
     min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--app-sidebar-color) 35%, var(--app-transparent)) var(--app-transparent);
 }
 
 .admin-sidebar .nav-link {
